@@ -1,18 +1,18 @@
 import "./App.css";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Home from "./pages/Home";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import Home from "./pages/home/Home";
 import { Routes, Route, Link } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
-import AdminDashboard from "./pages/AdminDashboard";
-import UserDashboard from "./pages/UserDashboard";
-import UserHome from "./pages/userPages/UserHome";
-import AdminHome from "./pages/adminPages/AdminHome";
-import AddTask from "./pages/userPages/AddTask";
-import ViewTask from "./pages/userPages/ViewTask";
-import Forbidden from "./components/errorHandling/Forbidden";
-import NotFound from "./components/errorHandling/NotFound";
-import Unauthorized from "./components/errorHandling/Unauthorized";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import UserDashboard from "./pages/user/UserDashboard";
+import UserHome from "./pages/user/UserHome";
+import AdminHome from "./pages/admin/AdminHome";
+import AddTask from "./pages/user/AddTask";
+import ViewTask from "./pages/user/ViewTask";
+import Forbidden from "./components/error/Forbidden";
+import NotFound from "./components/error/NotFound";
+import Unauthorized from "./components/error/Unauthorized";
 
 function App() {
   return (
@@ -23,13 +23,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-
         {/* error handling pages */}
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="forbidden" element={<Forbidden />} />
         <Route path="*" element={<NotFound />} />
-        
-
 
         {/* ADMIN and USER are validated from the jwt token after login. and it protects dasboards from cross access using protected route component */}
         {/* user's dashboard */}
@@ -46,8 +43,6 @@ function App() {
           <Route path="task" element={<ViewTask />} />
         </Route>
 
-
-
         {/* admin's dashboard */}
         <Route
           path="/admin-dashboard"
@@ -59,9 +54,6 @@ function App() {
         >
           <Route index element={<AdminHome />} />
         </Route>
-
-
-        
       </Routes>
     </>
   );
