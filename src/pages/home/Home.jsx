@@ -10,7 +10,7 @@ function Home() {
             <h1 className="text-6xl lg:text-7xl font-bold text-gradient pb-6">
               Task Wiser
             </h1>
-            <h2 className="text-3xl lg:text-3xl mb-5">
+            <h2 className="text-3xl lg:text-3xl mb-5 text-accent">
               The Smarter Way to Manage Tasks
             </h2>
             <p className="text-xl pt-6 text-gray-300">

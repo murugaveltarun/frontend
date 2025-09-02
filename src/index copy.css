@@ -5,25 +5,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme{
-  --color-tarun: #00A39C;
-  --color-bg-primary: #1A1A1D;
-  --color-bg-surface: #2D2D30;
-  --color-text-primary: #F5F5F7;
-  --color-text-secondary: #A0AEC0;
-  --color-text-on-accent: #FFFFFF;
-  --color-border-color: #718096;
-  --color-accent: #00A39C;
-  --color-destructive: #EF4444;
-
-  --color-status-completed: #28A745;
-  --color-status-not-started: #6C757D;
-  --color-status-in-progress: #007BFF;
-  --color-priority-high: #DC3545;
-  --color-priority-medium: #FFC107;
-  --color-priority-low: #198754;
-
-  --color-gradient-start-color: #3b82f6;
-  --color-gradient-end-color: #a855f7;
+  --color-tarun-: #00A39C;
 }
 
 
@@ -78,6 +60,28 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* --- KEYFRAME ANIMATIONS (Unchanged) --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes glow {
+  from { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+  to { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
+}
+@keyframes shine {
+  from { background-position: 100% 0%; }
+  to { background-position: -100% 0%; }
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
 /* --- UTILITIES & COMPONENTS (Updated to use variables) --- */
 .text-gradient {
@@ -117,3 +121,24 @@ body {
   transform: scale(1.05);
 }
 
+/* --- SCROLLBAR STYLES (Unchanged) --- */
+::-webkit-scrollbar {
+  width: 8px;             
+  height: 8px;             
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.7); 
+  border-radius: 9999px;   
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(148, 163, 184, 0.9); 
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.7) transparent;
+}

@@ -6,13 +6,13 @@ import { Routes, Route, Link } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import UserDashboard from "./pages/user/UserDashboard";
-import UserHome from "./pages/user/UserHome";
 import AdminHome from "./pages/admin/AdminHome";
 import AddTask from "./pages/user/AddTask";
-import ViewTask from "./pages/user/ViewTask";
+import ViewTask from "./pages/user/AllTasks";
 import Forbidden from "./components/error/Forbidden";
 import NotFound from "./components/error/NotFound";
 import Unauthorized from "./components/error/Unauthorized";
+import Logout from "./pages/auth/Logout";
 
 function App() {
   return (
@@ -22,8 +22,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/logout" element={<Logout />} />
 
-        {/* error handling pages */}
+        {/* error handling pages */ }
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="forbidden" element={<Forbidden />} />
         <Route path="*" element={<NotFound />} />
@@ -38,9 +39,8 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<UserHome />} />
           <Route path="add" element={<AddTask />} />
-          <Route path="task" element={<ViewTask />} />
+          <Route index element={<ViewTask />} />
         </Route>
 
         {/* admin's dashboard */}

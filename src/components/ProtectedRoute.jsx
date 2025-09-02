@@ -15,7 +15,7 @@ function ProtectedRoute({children,allowedRoles}) {
 
     if (new Date() < tokenExpiry) {
       if (allowedRoles.includes(decoded.role)) {
-        console.log("success")
+        console.log("Login success")
         return children;
       }else{
         console.log("Bad role.");

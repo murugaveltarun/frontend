@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { AuthContext } from "./AuthContext";
+
 
 function Login() {
+
+  const {login} = useContext(AuthContext)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [buttonText, setButtonText] = useState("Login");
@@ -37,14 +41,13 @@ function Login() {
       console.log("Backend response: ", response);
 
       if (response.status === 200) {
-        localStorage.setItem("token", response.data);
-        console.log("Stored token: ", localStorage.getItem("token"));
+
+        login(response.data)
         setUsername("");
         setPassword("");
         setButtonText("Logged in!");
 
         const decode = jwtDecode(response.data);
-        console.log(decode.role);
 
         setTimeout(() => {
           if (decode.role === "ROLE_USER") {

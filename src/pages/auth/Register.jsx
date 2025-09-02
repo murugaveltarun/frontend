@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [buttonText, setButtonText] = useState("Register");
@@ -17,7 +18,7 @@ function Register() {
     setButtonText("Registering...");
 
     
-    if (!username || !password) {
+    if (!username || !password || !name ) {
       alert("Please fill in all the fields");
       setButtonText("Register");
       return;
@@ -31,6 +32,7 @@ function Register() {
 
     try {
       const response = await axios.post(`${URL}/register`, {
+        name,
         username,
         password,
         role,
@@ -72,7 +74,16 @@ function Register() {
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-4 justify-center text-left"
               >
-                <label >Username</label>
+                <label >Name</label>
+                <input
+                  type="name"
+                  name="name"
+                  placeholder="Your Name"
+                  className="bg-gray-700 border border-gray-600 rounded-md p-2 text-white"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                ></input>
+                <label className="mt-8">Username</label>
                 <input
                   type="text"
                   name="username"
