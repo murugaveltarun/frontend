@@ -8,11 +8,12 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import UserDashboard from "./pages/user/UserDashboard";
 import AdminHome from "./pages/admin/AdminHome";
 import AddTask from "./pages/user/AddTask";
-import ViewTask from "./pages/user/AllTasks";
+import AllTasks from "./pages/user/AllTasks";
 import Forbidden from "./components/error/Forbidden";
 import NotFound from "./components/error/NotFound";
 import Unauthorized from "./components/error/Unauthorized";
 import Logout from "./pages/auth/Logout";
+import ViewTask from "./pages/user/ViewTask";
 
 function App() {
   return (
@@ -40,7 +41,8 @@ function App() {
           }
         >
           <Route path="add" element={<AddTask />} />
-          <Route index element={<ViewTask />} />
+          <Route path="task/:id" element={<ViewTask />} />
+          <Route index element={<AllTasks />} />
         </Route>
 
         {/* admin's dashboard */}

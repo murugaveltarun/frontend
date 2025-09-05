@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import UserSidebar from "../../components/navigation/UserSidebar";
 import { jwtDecode } from "jwt-decode";
-import {Sun,Moon, SunIcon, MoonIcon} from "lucide-react";
-
+import UserHeader from "./UserHeader";
 
 function UserDashboard() {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -19,30 +18,20 @@ function UserDashboard() {
     }
   }, [theme]);
 
-
   const user = jwtDecode(localStorage.getItem("token"));
   console.log(user);
 
   return (
     <>
-      <div className="flex bg-[#FAFAFA] dark:text-white text-black">
+      <div className=" flex bg-background dark:bg-bg-primary dark:text-text-primary text-dark-gray h-screen transition-transform duration-400">
         <div>
           <UserSidebar sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} user={user} />
         </div>
-        <main className="flex-1">
-          <header className="p-4 flex justify-between">
-            <button
-              className="text-3xl lg:hidden"
-              onClick={() => (sideBarOpen ? setSideBarOpen(false) : setSideBarOpen(true))}
-            >
-              ☰
-            </button>
-            <h1 className="text-3xl font-semibold text-gradient">Task Wiser</h1>
-            <div className="text-amber-300 dark:text-white">
-              <button onClick={theme == "light"? ()=>setTheme("dark") : ()=>setTheme("light") }  > {theme == "light" ? <SunIcon /> : <MoonIcon />} </button>
-            </div>
-          </header>
-          <footer>{/* <Outlet /> */}</footer>
+        <main className="flex flex-col flex-1">
+          <UserHeader setSideBarOpen={setSideBarOpen} sideBarOpen={sideBarOpen} theme={theme} setTheme={setTheme} />
+          <div className="m-8 custom-scroll pr-5">
+            <Outlet />
+          </div>
         </main>
       </div>
     </>

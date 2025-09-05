@@ -72,43 +72,43 @@ function Login() {
 
   return (
     <>
-      <div className="flex justify-center items-center h-screen">
-        <div className="min-h-screen/2">
-          <div className="w-full max-w bg-white/5 backdrop-blur-md border border-white/10 shadow-xl rounded-2xl p-8 text-center">
-            <h1 className="text-5xl font-bold text-gradient m-10 mb-15 py-6">
-              Login to you Account
-            </h1>
+      <div className="flex justify-center items-center h-screen bg-bg-primary">
+        <div className="  ">
+          <div className="card ">
+            <h4 className="m-7" >
+              Login to your Account
+            </h4>
 
             <div className="flex flex-col m-10 gap-4">
               <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-4 justify-center text-left"
+                className="flex flex-col gap-2 justify-center text-left"
               >
-                <label>Username</label>
+                <label className="text-neutral-300">Username</label>
                 <input
                   type="text"
                   name="username"
-                  placeholder="username"
-                  className="bg-gray-700 border border-gray-600 rounded-md p-2 text-white"
+                  placeholder="Your Username"
+                  className="focus:outline-none bg-gray-700 border border-gray-600 rounded-lg p-2 mb-4 text-white "
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 ></input>
-                <label className="mt-8">Password</label>
+                <label className="text-neutral-300">Password</label>
                 <input
                   type="password"
                   name="password"
-                  placeholder="password"
-                  className="bg-gray-700 border border-gray-600 rounded-md p-2 text-white"
+                  placeholder="Your Password"
+                  className="focus:outline-none bg-gray-700 border border-gray-600 rounded-lg p-2 text-white "
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 ></input>
-                <div className="flex justify-center w-full mt-10">
-                  <button className="btn-primary text-xl py-3" type="submit">
+                <div className="flex justify-center w-full ">
+                  <button className="btn-primary text-xl m-7" type="submit">
                     {buttonText}
                   </button>
                 </div>
               </form>
-              <p className="text-lg pt-10 text-gray-300">
+              <p className="text-lg text-gray-300">
                 New to Task Wiser?{" "}
                 <a
                   href="/register"
