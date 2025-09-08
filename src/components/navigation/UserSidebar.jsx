@@ -287,15 +287,15 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
                 {/* overdue */}
                 <div className="flex-1 flex-row justify-between sm:items-center cursor-pointer selection:none">
                   <div className="rounded-2xl grid grid-cols-3 text-sm md:text-md border-1 border-sidebar-border dark:border-border-color justify-center items-center ">
-                    <div onClick={() => setIncludeOverdue("true")} className={`${includeOverdue == "true" ? "bg-accent dark:bg-gradient-mid-color shadow-md p-1 m-2 rounded-xl text-white" : ""} flex flex-col items-center`}>
+                    <div onClick={() => setIncludeOverdue("true")} className={`${includeOverdue == "true" ? "bg-accent dark:bg-gradient-mid-color shadow-md p-2 m-1.5 rounded-xl text-white" : ""} flex flex-col items-center`}>
                       {" "}
                       <span>Overdue</span>{" "}<span>Only </span> 
                     </div>
-                    <div onClick={() => setIncludeOverdue("false")} className={`${includeOverdue == "false" ? "bg-accent dark:bg-gradient-mid-color shadow-md p-1 m-2 rounded-xl text-white" : ""} flex flex-col items-center`}>
+                    <div onClick={() => setIncludeOverdue("false")} className={`${includeOverdue == "false" ? "bg-accent dark:bg-gradient-mid-color shadow-md p-2 m-1.5 rounded-xl text-white" : ""} flex flex-col items-center`}>
                       {" "}
                        <span>Upcoming</span>{" "}<span>Only </span>
                     </div>
-                    <div onClick={() => setIncludeOverdue("")} className={`${includeOverdue == "" ? "bg-accent/70 dark:bg-gradient-mid-color/70 shadow-md p-1 m-2 rounded-xl text-white" : ""} flex flex-col items-center`}>
+                    <div onClick={() => setIncludeOverdue("")} className={`${includeOverdue == "" ? "bg-accent/70 dark:bg-gradient-mid-color/70 shadow-md p-2 m-1.5 rounded-xl text-white" : ""} flex flex-col items-center`}>
                       {" "}
                       <span>Show </span> <span>All</span>{" "}
                     </div>
