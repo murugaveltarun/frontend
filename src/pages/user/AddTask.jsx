@@ -46,12 +46,12 @@ function AddTask() {
     }
   };
   return (
-    <div className="flex justify-center items-center">
-      <div className="w-full  bg-text-primary dark:bg-bg-primary dark:border-gradient-mid-color dark:bg-neutral-50/10 ring-1 ring-accent dark:ring-gradient-mid-color dark:shadow-none   m-10 shadow-xl p-8 rounded-2xl .w-[100%]  .lg:w-[80%]  .xl:w-[70%] flex flex-col gap-10">
+    <div className="md:flex justify-center items-center mr-3">
+      <div className="w-full  bg-text-primary  dark:border-gradient-mid-color dark:bg-neutral-50/10 ring-1 ring-accent dark:ring-gradient-mid-color dark:shadow-none   m-2 md:m-10 shadow-xl p-8 rounded-2xl .w-[100%]  .lg:w-[80%]  .xl:w-[70%] flex flex-col gap-10">
       
         <h5 className="text-4xl font-semibold flex justify-center text-accent dark:text-gradient-mid-color border-b-1  pb-7">Add New Task</h5>
         <form className="grid gap-8 text-xl " onSubmit={handleAddTask}>
-          <div className="grid grid-cols-[150px_1fr] items-center gap-5">
+          <div className="grid md:grid-cols-[150px_1fr] items-center gap-5">
             <label htmlFor="title ">Title : </label>
             <input
               className="flex-1 bg-white dark:bg-bg-surface  p-2 border border-sidebar-border dark:border-border-color rounded-2xl  caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
@@ -61,7 +61,7 @@ function AddTask() {
               value={title}
             />
           </div>
-          <div className="grid grid-cols-[150px_1fr] items-center gap-5">
+          <div className="grid md:grid-cols-[150px_1fr] items-center gap-5">
             <label htmlFor="description">Description : </label>
             <textarea
               className="flex-1 bg-white dark:bg-bg-surface  p-2 border border-sidebar-border dark:border-border-color rounded-2xl  caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
@@ -70,7 +70,7 @@ function AddTask() {
               value={description}
             ></textarea>
           </div>
-          <div className="grid grid-cols-[150px_1fr] items-center gap-5">
+          <div className="grid md:grid-cols-[150px_1fr] items-center gap-5">
             <label htmlFor="dueDate">Due Date : </label>
             <div className="relative">
               <input
@@ -86,7 +86,7 @@ function AddTask() {
               <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 dark:text-white pointer-events-none" size={20} />
             </div>
           </div>
-          <div className="grid grid-cols-[150px_1fr] items-center gap-5">
+          <div className="grid md:grid-cols-[150px_1fr] items-center gap-5">
             <span>Priority : </span>
             <div className="flex  flex-col md:flex-row lg:flex-col xl:flex-row gap-4 gap-y-6">
               <div>
@@ -109,9 +109,9 @@ function AddTask() {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-[150px_1fr] items-center gap-5 ">
+          <div className="grid md:grid-cols-[150px_1fr] items-center gap-5 ">
             <span>Status : </span>
-            <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row gap-4 gap-y-6">
+            <div className=" flex flex-col md:flex-row lg:flex-col xl:flex-row gap-4 gap-y-6">
               <div>
                 <input
                   type="radio"

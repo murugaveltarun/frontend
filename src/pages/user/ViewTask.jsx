@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getApi } from "../../utils/api";
 import { AuthContext } from "../auth/AuthContext";
 import { AlertTriangle, CalendarClockIcon, Check, CheckCheck, CheckCircle, Clock, Delete, Pencil, Trash2 } from "lucide-react";
-import { format, formatDistance, subDays } from "date-fns";
+import { format, formatDistance, subDays, isPast } from "date-fns";
 
 function ViewTask({ isEditing, handleIsEditing }) {
   const { token } = useContext(AuthContext);
@@ -67,7 +67,7 @@ function ViewTask({ isEditing, handleIsEditing }) {
 
             <div className="">
               {/* status bar */}
-              <div className="flex flex-col gap-10 relative my-14 mx-20">
+              <div className="flex flex-col gap-10 relative my-14 mx-10 md:mx-20">
                 <div className="flex flex-row">
                   {/* leftbar of status bar */}
                   <div
@@ -90,7 +90,7 @@ function ViewTask({ isEditing, handleIsEditing }) {
                     }`}
                   ></div>
                 </div>
-                <div className="flex flex-row justify-between relative">
+                <div className="flex flex-row justify-between relative text-xs md:text-md">
                   {/* not started */}
                   <div className="flex flex-col justify-center items-center absolute left-0 -translate-x-1/2 -translate-y-1/2">
                     <div
@@ -103,7 +103,10 @@ function ViewTask({ isEditing, handleIsEditing }) {
                       }`}
                     >
                       {task.status === "not started" && (
-                        <Check className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent dark:text-gradient-mid-color" strokeWidth={4} />
+                        <Check
+                          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent dark:text-gradient-mid-color"
+                          strokeWidth={4}
+                        />
                       )}
                     </div>
                     <div
@@ -126,7 +129,10 @@ function ViewTask({ isEditing, handleIsEditing }) {
                       }`}
                     >
                       {task.status === "in progress" && (
-                        <Check className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent dark:text-gradient-mid-color" strokeWidth={4} />
+                        <Check
+                          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent dark:text-gradient-mid-color"
+                          strokeWidth={4}
+                        />
                       )}
                     </div>
                     <div
@@ -137,7 +143,7 @@ function ViewTask({ isEditing, handleIsEditing }) {
                       In Progress
                     </div>
                   </div>
-                    {/* completed  */}
+                  {/* completed  */}
                   <div className="flex flex-col justify-center items-center absolute right-0 translate-x-1/2 -translate-y-1/2">
                     <div
                       className={`z-10 rounded-full  relative ${
@@ -172,13 +178,19 @@ function ViewTask({ isEditing, handleIsEditing }) {
                   <h5 className="text-4xl font-semibold">{task.title}</h5>
                   <div>
                     {task.dueDate && (
-                      <div className="text-xl flex gap-x-2 gap-y-3">
+                      <div className="text-xl flex flex-col md:flex-row md:items-center   lg:flex-col lg:items-start xl:flex-row xl:items-center   gap-x-2 gap-y-4">
                         <span className="flex items-center gap-2 min-w-fit">
                           <CalendarClockIcon className="w-5" /> Due date:
                         </span>
-                        <span className="min-w-fit">
+                        <span className="min-w-fit flex flex-col md:flex-row md:items-center lg:flex-col lg:items-start xl:flex-row xl:items-center  justify-center gap-y-2">
                           <span className="font-bold">{format(new Date(task.dueDate), "MMM dd, yyyy EEEE  • hh:mm a")}</span>{" "}
-                          <span className="italic p-3 py-1 rounded-full bg-accent/30 dark:bg-gradient-mid-color/50">{formatDistance(subDays(new Date(task.dueDate), 0), new Date(), { addSuffix: true })}</span>
+                          <span
+                            className={`italic p-3 ml-1 py-1 rounded-full select-none w-fit  ${
+                              isPast(new Date(task.dueDate)) ? "bg-red-200 dark:bg-red-400" : "bg-accent/30 dark:bg-gradient-mid-color/50"
+                            }`}
+                          >
+                            {formatDistance(subDays(new Date(task.dueDate), 0), new Date(), { addSuffix: true })}
+                          </span>
                         </span>
                       </div>
                     )}
@@ -214,7 +226,7 @@ function ViewTask({ isEditing, handleIsEditing }) {
                           <Clock className="w-4 h-4" />
                           <span className="">Created At :</span>
                         </p>
-                        <p className="italic font-bold">{format(new Date(task.createdAt), "MMM dd, yyyy • hh:mm a")}</p>
+                        <p className="italic font-bold ">{format(new Date(task.createdAt), "MMM dd, yyyy • hh:mm a")}</p>
                       </div>
                     )}
                     {task.lastModifiedAt && (

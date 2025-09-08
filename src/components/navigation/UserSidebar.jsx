@@ -63,7 +63,7 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
       <div
         className={`z-1000 bg-text-primary border-r-1 border-sidebar-border dark:bg-bg-primary dark:border-border-color dark:backdrop-blur-md w-80 sm:w-110 max-h-screen sm:min-h-screen shadow-md shadow-accent dark:shadow-gradient-mid-color fixed ${
           sideBarOpen ? "-translate-x-0" : "-translate-x-80 sm:-translate-x-110"
-        } lg:-translate-x-0 lg:static flex flex-col transition-transform duration-300 ease-in-out overflow-y-auto sm:overflow-clip custom-scroll`}
+        } lg:-translate-x-0 lg:static flex flex-col transition-transform duration-300 ease-in-out overflow-y-auto  custom-scroll`}
       >
         <div className="flex p-5 h-30 justify-between border-sidebar-border dark:border-border-color border-b-1">
           <div className="flex flex-row justify-center items-center ">
@@ -113,7 +113,7 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
                   <input
                     type="text"
                     name="title"
-                    className="flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border dark:border-border-color rounded-2xl max-w-[60%] caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
+                    className="flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border rounded-2xl max-w-[60%] caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
@@ -124,7 +124,7 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
                   <input
                     type="text"
                     name="title"
-                    className="flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border dark:border-border-color rounded-2xl max-w-[60%] caret-sidebar-border dark:caret-gradient-mid-color  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
+                    className="flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border rounded-2xl max-w-[60%] caret-sidebar-border dark:caret-gradient-mid-color  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
                     value={description}
                     onChange={(e) => {
                       setDescription(e.target.value);
@@ -135,7 +135,7 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
                 {/* status */}
                 <div className="flex flex-col  sm:flex-row justify-between sm:items-center ">
                   <p className="font-semibold">Status</p>
-                  <div className=" grid sm:grid-rows-2 sm:grid-cols-2 gap-y-2 sm:gap-y-5 sm:w-[60%] justify-start sm:justify-center select-none">
+                  <div className=" grid  sm:grid-rows-2 grid-cols-2 gap-y-2 sm:gap-y-5 sm:w-[60%] justify-start sm:justify-center select-none">
                     <div className="flex justify-center items-center">
                       <input
                         type="radio"
@@ -208,7 +208,7 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
                 {/* priorities */}
                 <div className="flex flex-col  sm:flex-row justify-between sm:items-center ">
                   <p className="font-semibold">Priority</p>
-                  <div className=" grid sm:grid-rows-2 sm:grid-cols-2 gap-y-2 sm:gap-y-5 sm:w-[60%] justify-start sm:justify-center select-none">
+                  <div className=" grid sm:grid-rows-2 grid-cols-2 gap-y-2 sm:gap-y-5 sm:w-[60%] justify-start sm:justify-center select-none">
                     <div className="flex justify-center items-center">
                       <input
                         type="radio"
@@ -284,6 +284,7 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
                     </div>
                   </div>
                 </div>
+
               </div>
             </form>
           </div>

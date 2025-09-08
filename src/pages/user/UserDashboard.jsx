@@ -29,7 +29,7 @@ function UserDashboard() {
         </div>
         <main className="flex flex-col flex-1">
           <UserHeader setSideBarOpen={setSideBarOpen} sideBarOpen={sideBarOpen} theme={theme} setTheme={setTheme} />
-          <div className="m-8 custom-scroll pr-5">
+          <div className="m-1 md:m-8 custom-scroll md:pr-5 pr-1">
             <Outlet />
           </div>
         </main>

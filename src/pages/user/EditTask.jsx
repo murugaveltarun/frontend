@@ -3,8 +3,8 @@ import { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getApi } from "../../utils/api";
 import { AuthContext } from "../auth/AuthContext";
-import { AlertTriangle, Calendar, CalendarClockIcon, Clock, Pencil, Save, X, Check } from "lucide-react";
-import { format, formatDistance, subDays } from "date-fns";
+import { AlertTriangle, Calendar, Clock,  Save, X, Check } from "lucide-react";
+import { format} from "date-fns";
 
 
 
@@ -89,7 +89,7 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
 
               <div className="flex flex-col gap-10">
                 {/* status bar */}
-                <div className="flex flex-col gap-10 relative my-14 mx-20">
+                <div className="flex flex-col gap-10 relative my-14 mx-10 md:mx-20">
                   <div className="flex flex-row">
                     {/* leftbar of status bar */}
                     <div
@@ -112,7 +112,7 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                       }`}
                     ></div>
                   </div>
-                  <div className="flex flex-row justify-between relative ">
+                  <div className="flex flex-row justify-between relative text-xs md:text-md">
                     {/* not started */}
                     <div className="flex flex-col justify-center items-center absolute left-0 -translate-x-1/2 -translate-y-1/2 " onClick={() => setStatus("not started")}>
                       <div
