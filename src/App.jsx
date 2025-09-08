@@ -13,7 +13,7 @@ import Forbidden from "./components/error/Forbidden";
 import NotFound from "./components/error/NotFound";
 import Unauthorized from "./components/error/Unauthorized";
 import Logout from "./pages/auth/Logout";
-import ViewTask from "./pages/user/ViewTask";
+import TaskPage from "./pages/user/TaskPage";
 
 function App() {
   return (
@@ -41,7 +41,7 @@ function App() {
           }
         >
           <Route path="add" element={<AddTask />} />
-          <Route path="task/:id" element={<ViewTask />} />
+          <Route path="task/:id" element={<TaskPage />} />
           <Route index element={<AllTasks />} />
         </Route>
 

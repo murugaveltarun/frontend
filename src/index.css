@@ -37,7 +37,7 @@
 
 html {
   scroll-behavior: smooth;
-  @apply dark:bg-bg-primary bg-text-on-accent
+  @apply dark:bg-bg-primary bg-text-on-accent;
 }
 
 body {
@@ -49,8 +49,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-
 
 h1 {
   @apply text-6xl lg:text-7xl font-bold text-gradient pb-6;
@@ -110,7 +108,7 @@ h4 {
 }
 
 @utility status-all {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:bg-accent dark:peer-checked:bg-gradient-mid-color dark:border-border-color peer-checked:text-white peer-checked:border-none transition;
+  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:bg-accent dark:peer-checked:bg-gradient-mid-color  peer-checked:text-white peer-checked:border-none transition;
 }
 
 @utility priority-high {
@@ -126,15 +124,15 @@ h4 {
 }
 
 @utility priority-high-tag {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color bg-priority-high text-white border-none ;
+  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color bg-priority-high text-white border-none;
 }
 
 @utility priority-medium-tag {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color  bg-priority-medium text-white border-none ;
+  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color  bg-priority-medium text-white border-none;
 }
 
 @utility priority-low-tag {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color bg-priority-low text-white border-none ;
+  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color bg-priority-low text-white border-none;
 }
 
 @utility priority-all {
@@ -144,8 +142,20 @@ h4 {
   @apply dark:bg-gradient-to-tl dark:from-neutral-50/10 dark:to-gradient-mid-color/5;
 }
 
-@utility btn-secondary {
-  @apply rounded-2xl hover:scale-110 transition-transform duration-600 ease-in-out text-dark-gray bg-background dark:border-gradient-mid-color dark:bg-inherit border-1 border-sidebar-border dark:text-gradient-mid-color dark:border-border-color 
+@utility btn-primary-dashboard {
+  @apply flex gap-3 p-4 py-2 justify-center items-center rounded-2xl  hover:scale-110 transition-transform duration-600 ease-in-out text-white bg-accent dark:bg-gradient-mid-color;
+}
+
+@utility btn-secondary-dashboard {
+  @apply p-2 px-3 rounded-2xl hover:scale-110 transition-transform duration-600 ease-in-out text-dark-gray bg-background dark:border-gradient-mid-color dark:bg-inherit border-1 border-sidebar-border dark:text-gradient-mid-color dark:border-border-color;
+}
+
+@utility input-field {
+  @apply flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border dark:border-border-color rounded-2xl max-w-[60%] caret-sidebar-border  dark:caret-gradient-mid-color focus:border-sidebar-border dark:focus:border-gradient-mid-color focus:outline-none;
+}
+
+@utility red-button {
+  @apply flex flex-row justify-center items-center rounded-lg border border-red-500 px-6 py-2 m-6 transition duration-300 ease-in-out hover:scale-105 bg-red-500 text-white 
 }
 
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {

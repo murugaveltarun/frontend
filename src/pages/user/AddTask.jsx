@@ -150,13 +150,13 @@ function AddTask() {
             <button
               type="button"
               onClick={handleCancel}
-              className="flex gap-3 p-4 py-2 justify-center items-center rounded-2xl  hover:scale-110 transition-transform duration-600 ease-in-out text-dark-gray bg-background dark:border-gradient-mid-color dark:bg-inherit border-1 border-sidebar-border dark:text-gradient-mid-color dark:border-border-color "
+              className="btn-secondary-dashboard"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex gap-3 p-4 py-2 justify-center items-center rounded-2xl  hover:scale-110 transition-transform duration-600 ease-in-out text-white bg-accent dark:bg-gradient-mid-color  "
+              className="btn-primary-dashboard"
             >
               Add Task
             </button>

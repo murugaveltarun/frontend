@@ -26,7 +26,7 @@ function TaskCard({ title, description, priority, status, id, dueDate }) {
             ? "border-priority-medium/50 dark:border-priority-medium bg-priority-medium/5 dark:gradient-card  dark:shadow-priority-medium/40"
             : "border-priority-low/50 dark:border-priority-low bg-priority-low/5 dark:gradient-card  dark:shadow-priority-low/40"
         } h-50 p-4 rounded-2xl
-          flex flex-col justify-between shadow-md hover:shadow-lg   hover:scale-103 transition-all duration-400
+          flex flex-col justify-between shadow-md hover:shadow-lg  cursor-pointer hover:scale-103 transition-all duration-400
           backdrop-filter backdrop-blur-lg 
         `}
 
