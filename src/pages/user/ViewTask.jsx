@@ -103,7 +103,7 @@ function ViewTask({ isEditing, handleIsEditing }) {
                       }`}
                     >
                       {task.status === "not started" && (
-                        <Check className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent " strokeWidth={4} />
+                        <Check className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent dark:text-gradient-mid-color" strokeWidth={4} />
                       )}
                     </div>
                     <div
@@ -126,7 +126,7 @@ function ViewTask({ isEditing, handleIsEditing }) {
                       }`}
                     >
                       {task.status === "in progress" && (
-                        <Check className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent " strokeWidth={4} />
+                        <Check className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent dark:text-gradient-mid-color" strokeWidth={4} />
                       )}
                     </div>
                     <div
@@ -178,7 +178,7 @@ function ViewTask({ isEditing, handleIsEditing }) {
                         </span>
                         <span className="min-w-fit">
                           <span className="font-bold">{format(new Date(task.dueDate), "MMM dd, yyyy EEEE  • hh:mm a")}</span>{" "}
-                          <span className="italic">({formatDistance(subDays(new Date(task.dueDate), 0), new Date(), { addSuffix: true })})</span>
+                          <span className="italic p-3 py-1 rounded-full bg-accent/30 dark:bg-gradient-mid-color/50">{formatDistance(subDays(new Date(task.dueDate), 0), new Date(), { addSuffix: true })}</span>
                         </span>
                       </div>
                     )}

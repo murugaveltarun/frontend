@@ -71,7 +71,7 @@ function AddTask() {
             ></textarea>
           </div>
           <div className="grid grid-cols-[150px_1fr] items-center gap-5">
-            <label htmlFor="dueDate">Date : </label>
+            <label htmlFor="dueDate">Due Date : </label>
             <div className="relative">
               <input
                 name="dueDate"
@@ -113,12 +113,6 @@ function AddTask() {
             <span>Status : </span>
             <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row gap-4 gap-y-6">
               <div>
-                <input type="radio" name="status" value="completed" className="hidden peer" id="status-completed" onChange={(e) => setStatus(e.target.value)} />
-                <label htmlFor="status-completed" className="status-completed">
-                  Completed
-                </label>
-              </div>
-              <div>
                 <input
                   type="radio"
                   name="status"
@@ -142,6 +136,12 @@ function AddTask() {
                 />
                 <label htmlFor="status-in-progress" className="status-in-progress">
                   In Progress
+                </label>
+              </div>
+              <div>
+                <input type="radio" name="status" value="completed" className="hidden peer" id="status-completed" onChange={(e) => setStatus(e.target.value)} />
+                <label htmlFor="status-completed" className="status-completed">
+                  Completed
                 </label>
               </div>
             </div>

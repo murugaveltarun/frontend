@@ -125,7 +125,7 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                         }`}
                       >
                         {status === "not started" && (
-                          <Check className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent " strokeWidth={4} />
+                          <Check className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent dark:text-gradient-mid-color" strokeWidth={4} />
                         )}
                       </div>
                       <div
@@ -148,7 +148,7 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                         }`}
                       >
                         {status === "in progress" && (
-                          <Check className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent " strokeWidth={4} />
+                          <Check className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent dark:text-gradient-mid-color" strokeWidth={4} />
                         )}
                       </div>
                       <div
