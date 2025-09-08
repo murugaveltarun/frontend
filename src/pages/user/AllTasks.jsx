@@ -40,12 +40,12 @@ function AllTasks() {
 
   console.log(tasks);
   return <div className="">
-    <div className="flex flex-row justify-between">
-      {tasks.length != 0 && (<span className="pl-4 pb-4">Showing {tasks.length} tasks.</span>)}
+    <div className="flex flex-row justify-between items-center text-sm md:text-md">
+      {tasks.length != 0 && ( <div cla><span className="pl-4 pb-4 ">Showing {tasks.length} tasks.</span></div> )}
       {tasks.length != 0 && (  
-        <div className="flex flex-row justify-center items-center gap-4" >
+        <div className="flex flex-row justify-center gap-2 items-center" >
           <label htmlFor="sort">Sort By</label> 
-          <select className="appearance-none flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border rounded-2xl max-w-[60%] caret-sidebar-border dark:caret-gradient-mid-color  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none" onChange={(e)=>setSortOrder(e.target.value)} value={sortOrder}> 
+          <select className="appearance-none flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2  border border-sidebar-border rounded-2xl max-w-[60%] caret-sidebar-border dark:caret-gradient-mid-color  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none" onChange={(e)=>setSortOrder(e.target.value)} value={sortOrder}> 
             <option value={sortParams[0]} > Due Date ↓  </option> 
             <option value={sortParams[1]} > Due Date ↑  </option> 
             <option value={sortParams[2]}> Created ↓ </option> 
