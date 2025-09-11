@@ -14,6 +14,7 @@ import NotFound from "./components/error/NotFound";
 import Unauthorized from "./components/error/Unauthorized";
 import Logout from "./pages/auth/Logout";
 import TaskPage from "./pages/user/TaskPage";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           <Route index element={<AdminHome />} />
         </Route>
       </Routes>
+      <Toaster position="bottom-right" reverseOrder={false} />
     </>
   );
 }

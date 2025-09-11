@@ -59,7 +59,7 @@ h4 {
 }
 
 @utility btn-primary {
-  @apply cursor-pointer bg-bg-primary border border-border-color rounded-full px-5 py-2 transition-all duration-300 text-text-primary font-medium transform hover:scale-105;
+  @apply select-none cursor-pointer bg-bg-primary border border-border-color rounded-full px-5 py-2 transition-all duration-300 text-text-primary font-medium transform hover:scale-105;
 }
 
 @utility text-gradient {
@@ -67,7 +67,7 @@ h4 {
 }
 
 @utility btn-secondary {
-  @apply cursor-pointer bg-transparent border border-border-color rounded-full px-5 py-2 transition-transform duration-300 text-text-primary font-medium transform hover:scale-105;
+  @apply select-none cursor-pointer bg-transparent border border-border-color rounded-full px-5 py-2 transition-transform duration-300 text-text-primary font-medium transform hover:scale-105;
 }
 @utility card {
   @apply w-full bg-white/5 backdrop-blur-md border border-white/10 shadow-xl rounded-2xl p-8 text-center;

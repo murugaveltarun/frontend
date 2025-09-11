@@ -2,43 +2,62 @@ import { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getApi } from "../../utils/api";
 import { AuthContext } from "../auth/AuthContext";
-import { AlertTriangle, CalendarClockIcon, Check, CheckCheck, CheckCircle, Clock, Delete, Pencil, Trash2 } from "lucide-react";
+import { AlertTriangle, ArrowLeft, CalendarClockIcon, Check, CheckCheck, CheckCircle, Clock, Delete, Pencil, Trash2 } from "lucide-react";
 import { format, formatDistance, subDays, isPast } from "date-fns";
+import toast from "react-hot-toast";
+import { jwtDecode } from "jwt-decode";
+import ConfirmModel from "../../components/model/ConfirmModel";
 
 function ViewTask({ isEditing, handleIsEditing }) {
   const { token } = useContext(AuthContext);
   const [task, setTask] = useState([]);
+  const [confirm, setConfirm] = useState(false);
+
   const navigate = useNavigate();
   const { id } = useParams();
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    if (token == null) {
-      alert("Session Expired");
-      navigate("/login");
-    }
+    const confirm = window.confirm("Are you sure you want to delete this task?");
+    if (!confirm) return;
     try {
       const response = await getApi(token).delete("/task/" + id);
-      console.log(response);
-      console.log("deleted successfully");
-      navigate("/user-dashboard");
+      if (response.data.status == 200) {
+        toast.success("Task Deleted Successfully.");
+        console.log("deleted successfully");
+        navigate("/user-dashboard");
+      }
     } catch (e) {
+      const decode = jwtDecode(token);
+      if (decode.exp * 1000 < Date.now()) {
+        toast.error("Session expired. Please login again.");
+        navigate("/login");
+      }
+      console.log(e.status);
       console.log(e);
     }
   };
 
   useEffect(() => {
     const getTask = async () => {
-      if (token == null) {
-        alert("Session Expired");
-        navigate("/login");
-      }
       try {
         const response = await getApi(token).get("/task/" + id);
-        setTask(response.data);
+        if (response.data.status == 200) {
+          setTask(response.data.data);
+        }
         console.log(task);
         console.log(task.dueDate);
       } catch (e) {
+        const decode = jwtDecode(token);
+        if (decode.exp * 1000 < Date.now()) {
+          toast.error("Session expired. Please login again.");
+          navigate("/login");
+        }
+        console.log(e.status);
+        if (e.status == 404 || e.status == 401) {
+          toast.error("Task Not Found");
+          navigate("/user-dashboard");
+        }
         console.log(e);
       }
     };
@@ -47,22 +66,36 @@ function ViewTask({ isEditing, handleIsEditing }) {
 
   return (
     <>
+      {confirm &&
+        <ConfirmModel message={"Are you sure you want to delete this task?"} message2={" It will be deleted forever."} handleYes={handleDelete} setConfirm={setConfirm} text={"Delete"} />
+        }
       {!isEditing && (
         <div className="flex justify-center items-center ">
           <div className="w-full bg-text-primary dark:border-gradient-mid-color dark:bg-neutral-50/10 ring-1 ring-accent dark:ring-gradient-mid-color dark:shadow-none  m-3 xl:m-10 shadow-xl p-4 rounded-2xl flex flex-col">
-            <div className="flex justify-end gap-5">
-              <button className="btn-secondary-dashboard w-min" onClick={handleIsEditing}>
-                {" "}
-                <div className="flex gap-2 justify-center items-center">
+            <div className="flex justify-between gap-5">
+              <div className="flex justify-start gap-5">
+                <button className="btn-secondary-dashboard w-min h-full" onClick={() => navigate("/user-dashboard")}>
                   {" "}
-                  <Pencil className="w-4 h-4" /> <span className="text-lg"> Edit </span>{" "}
-                </div>{" "}
-              </button>
-              <button className="w-12 h-12 flex gap-2 justify-center items-center btn-secondary-dashboard " onClick={handleDelete}>
-                <div className="">
-                  <Trash2 className="w-6 h-6" /> <span className="text-lg"></span>
-                </div>
-              </button>
+                  <div className="flex gap-2 justify-center items-center">
+                    {" "}
+                    <ArrowLeft className="w-4 h-4" /> <span className="text-lg"> Back </span>{" "}
+                  </div>{" "}
+                </button>
+              </div>
+              <div className="flex justify-end gap-5">
+                <button className="btn-secondary-dashboard w-min" onClick={handleIsEditing}>
+                  {" "}
+                  <div className="flex gap-2 justify-center items-center ">
+                    {" "}
+                    <Pencil className="w-4 h-4" /> <span className="text-lg"> Edit </span>{" "}
+                  </div>{" "}
+                </button>
+                <button className="w-12 h-12 flex gap-2 justify-center items-center btn-secondary-dashboard " onClick={()=>setConfirm(true)}>
+                  <div className="">
+                    <Trash2 className="w-6 h-6" /> <span className="text-lg"></span>
+                  </div>
+                </button>
+              </div>
             </div>
 
             <div className="">

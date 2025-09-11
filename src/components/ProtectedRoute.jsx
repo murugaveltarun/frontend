@@ -22,8 +22,8 @@ function ProtectedRoute({children,allowedRoles}) {
         return <Navigate to="/unauthorized" replace />
       }
     } else {
-      console.log("Expired token");
-      return <Navigate to="/login" replace />;
+      console.log("Bad access");
+      return <Navigate to="/unauthorized" replace />;
     }
   } catch (e) {
     console.error("Invalid token:", e);

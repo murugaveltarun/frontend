@@ -3,10 +3,10 @@ import { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getApi } from "../../utils/api";
 import { AuthContext } from "../auth/AuthContext";
-import { AlertTriangle, Calendar, Clock,  Save, X, Check } from "lucide-react";
-import { format} from "date-fns";
-
-
+import { AlertTriangle, Calendar, Clock, Save, X, Check, ArrowLeft } from "lucide-react";
+import { format } from "date-fns";
+import toast from "react-hot-toast";
+import { jwtDecode } from "jwt-decode";
 
 function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
   const { token } = useContext(AuthContext);
@@ -22,17 +22,26 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
 
   const handleSubmitEdit = async (e) => {
     e.preventDefault();
-    if (token == null) {
-      alert("Session Expired! Please login");
-      navigate("/login");
-    }
     try {
       const editedTask = { title, description, dueDate, priority, status };
       const response = await getApi(token).put("/edit/" + id, editedTask);
-      console.log(editedTask);
-      console.log(response.data);
-      setIsEditing(false);
+      if (response.data.status == 200) {
+        toast.success("Task edited sucessfully.");
+        console.log(editedTask);
+        console.log(response.data);
+        setIsEditing(false);
+      }
     } catch (e) {
+      const decode = jwtDecode(token);
+      if (decode.exp * 1000 < Date.now()) {
+        toast.error("Session expired. Please login again.");
+        navigate("/login");
+      }
+      console.log(e.status);
+      if (e.status == 404 || e.status == 401) {
+        toast.error("Task Not Found");
+        navigate("/user-dashboard");
+      }
       console.log(e);
     }
   };
@@ -45,15 +54,24 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
       }
       try {
         const response = await getApi().get("/task/" + id);
-        setOldTask(response.data);
-        const task = response.data;
+        setOldTask(response.data.data);
+        const task = response.data.data;
         setTitle(task.title);
         setDescription(task.description);
         setStatus(task.status);
         setPriority(task.priority);
         setDueDate(task.dueDate);
       } catch (e) {
-        e;
+        const decode = jwtDecode(token);
+        if (decode.exp * 1000 < Date.now()) {
+          toast.error("Session expired. Please login again.");
+          navigate("/login");
+        }
+        console.log(e.status);
+        if (e.status == 404 || e.status == 401) {
+          toast.error("Task Not Found");
+          navigate("/user-dashboard");
+        }
         console.log(e);
       }
     };
@@ -70,21 +88,32 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
         <div className="flex justify-center items-center ">
           <div className="w-full bg-text-primary dark:border-gradient-mid-color dark:bg-neutral-50/10 ring-1 ring-accent dark:ring-gradient-mid-color dark:shadow-none  m-3 xl:m-10 shadow-xl p-4 rounded-2xl flex flex-col">
             <form onSubmit={handleSubmitEdit}>
-              <div className="flex gap-5 justify-end ">
-                <button type="button" className="btn-secondary-dashboard w-min" onClick={handleIsEditing}>
-                  {" "}
-                  <div className="flex gap-2 justify-center items-center">
+              <div className="flex gap-5 justify-between ">
+                <div className="flex justify-start gap-5">
+                  <button className="btn-secondary-dashboard w-min h-full" onClick={() => navigate("/user-dashboard")}>
                     {" "}
-                    <X className="w-4 h-4" /> <span className="text-lg"> Cancel </span>{" "}
-                  </div>{" "}
-                </button>
-                <button type="submit" className="btn-primary-dashboard w-min" onClick={handleSubmitEdit}>
-                  {" "}
-                  <div className="flex gap-2 justify-center items-center">
+                    <div className="flex gap-2 justify-center items-center">
+                      {" "}
+                      <ArrowLeft className="w-4 h-4" /> <span className="text-lg"> Back </span>{" "}
+                    </div>{" "}
+                  </button>
+                </div>
+                <div className="flex justify-end gap-5">
+                  <button type="button" className="btn-secondary-dashboard w-min" onClick={handleIsEditing}>
                     {" "}
-                    <Save className="w-4 h-4" /> <span className="text-lg"> Save </span>{" "}
-                  </div>{" "}
-                </button>
+                    <div className="flex gap-2 justify-center items-center">
+                      {" "}
+                      <X className="w-4 h-4" /> <span className="text-lg"> Cancel </span>{" "}
+                    </div>{" "}
+                  </button>
+                  <button type="submit" className="btn-primary-dashboard w-min" onClick={handleSubmitEdit}>
+                    {" "}
+                    <div className="flex gap-2 justify-center items-center">
+                      {" "}
+                      <Save className="w-4 h-4" /> <span className="text-lg"> Save </span>{" "}
+                    </div>{" "}
+                  </button>
+                </div>
               </div>
 
               <div className="flex flex-col gap-10">
@@ -104,17 +133,16 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                     {/* rightbar of status bar */}
                     <div
                       className={` h-1 absolute w-1/2 top-1/2  right-0  -translate-y-2 ${
-                        status == "not started"
-                          ? "bg-text-secondary"
-                          : status == "in progress"
-                          ? "bg-text-secondary"
-                          : "bg-accent dark:bg-gradient-mid-color"
+                        status == "not started" ? "bg-text-secondary" : status == "in progress" ? "bg-text-secondary" : "bg-accent dark:bg-gradient-mid-color"
                       }`}
                     ></div>
                   </div>
                   <div className="flex flex-row justify-between relative text-xs md:text-md">
                     {/* not started */}
-                    <div className="flex flex-col justify-center items-center absolute left-0 -translate-x-1/2 -translate-y-1/2 " onClick={() => setStatus("not started")}>
+                    <div
+                      className="flex flex-col justify-center items-center absolute left-0 -translate-x-1/2 -translate-y-1/2 "
+                      onClick={() => setStatus("not started")}
+                    >
                       <div
                         className={`z-10 rounded-full relative cursor-pointer select-none ${
                           status == "not started"
@@ -125,7 +153,10 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                         }`}
                       >
                         {status === "not started" && (
-                          <Check className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent dark:text-gradient-mid-color" strokeWidth={4} />
+                          <Check
+                            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent dark:text-gradient-mid-color"
+                            strokeWidth={4}
+                          />
                         )}
                       </div>
                       <div
@@ -137,7 +168,10 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                       </div>
                     </div>
                     {/* in progress  */}
-                    <div className="flex flex-col justify-center items-center absolute left-1/2 -translate-x-1/2 -translate-y-1/2" onClick={() => setStatus("in progress")}>
+                    <div
+                      className="flex flex-col justify-center items-center absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
+                      onClick={() => setStatus("in progress")}
+                    >
                       <div
                         className={`z-10 rounded-full relative cursor-pointer select-none ${
                           status == "not started"
@@ -148,7 +182,10 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                         }`}
                       >
                         {status === "in progress" && (
-                          <Check className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent dark:text-gradient-mid-color" strokeWidth={4} />
+                          <Check
+                            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-accent dark:text-gradient-mid-color"
+                            strokeWidth={4}
+                          />
                         )}
                       </div>
                       <div
@@ -160,7 +197,10 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                       </div>
                     </div>
                     {/* completed  */}
-                    <div className="flex flex-col justify-center items-center absolute right-0 translate-x-1/2 -translate-y-1/2" onClick={() => setStatus("completed")}>
+                    <div
+                      className="flex flex-col justify-center items-center absolute right-0 translate-x-1/2 -translate-y-1/2"
+                      onClick={() => setStatus("completed")}
+                    >
                       <div
                         className={`z-10 rounded-full  relative cursor-pointer select-none ${
                           status == "not started"
