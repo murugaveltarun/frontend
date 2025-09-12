@@ -11,8 +11,8 @@ function Logout() {
   
   useEffect(() => {
   logout();
-  toast.success("Logged out successfully");
-  }, [logout]);
+  }, []);
+  
   
 
 

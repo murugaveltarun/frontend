@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
-import { getApi } from "../../utils/api";
-import { AuthContext } from "../auth/AuthContext";
+import { getApi } from "../../../utils/api";
+import { AuthContext } from "../../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Calendar } from "lucide-react";
+import toast from "react-hot-toast";
+import { checkTokenOrRefresh } from "../../../utils/checkTokenOrRefresh";
 
 function AddTask() {
   const [title, setTitle] = useState("");
@@ -12,7 +14,7 @@ function AddTask() {
   const [status, setStatus] = useState("");
 
   const navigate = useNavigate();
-  const { token } = useContext(AuthContext);
+  const { token, setToken } = useContext(AuthContext);
 
   const handleCancel = () => {
     setTitle("");
@@ -31,24 +33,37 @@ function AddTask() {
       navigate("/login");
     }
     if (!title || !description || !dueDate || !priority || !status) {
-      alert("enter all!");
+      toast.error("Enter all fields.");
       return;
     }
     try {
       const dueDateFormatted = new Date(dueDate).toISOString().substring(0, 19);
       const task = { title, description, dueDate: dueDateFormatted, priority, status };
       console.log(task);
-      const response = await getApi(token).post("/create", task);
+
+      //check before whether the access token is valid or not
+      const validToken = await checkTokenOrRefresh(token, navigate);
+      if (!validToken) return;
+      setToken(validToken);
+
+      //add task handle
+      const response = await getApi(validToken).post("/create", task);
+      if (response.data.status === 201) {
+        toast.success("Task Added Successfully");
+        navigate("/user-dashboard");
+      }
       console.log(response.data);
-      navigate("/user-dashboard");
     } catch (e) {
+      console.log(e.status);
+      if (e.request) {
+        toast.error("Error while adding task. Please try again later.");
+      }
       console.log(e);
     }
   };
   return (
     <div className="md:flex justify-center items-center mr-3">
       <div className="w-full  bg-text-primary  dark:border-gradient-mid-color dark:bg-neutral-50/10 ring-1 ring-accent dark:ring-gradient-mid-color dark:shadow-none   m-2 md:m-10 shadow-xl p-8 rounded-2xl .w-[100%]  .lg:w-[80%]  .xl:w-[70%] flex flex-col gap-10">
-      
         <h5 className="text-4xl font-semibold flex justify-center text-accent dark:text-gradient-mid-color border-b-1  pb-7">Add New Task</h5>
         <form className="grid gap-8 text-xl " onSubmit={handleAddTask}>
           <div className="grid md:grid-cols-[150px_1fr] items-center gap-5">
@@ -147,17 +162,10 @@ function AddTask() {
             </div>
           </div>
           <div className="flex justify-center  gap-7 items-center mt-5 ">
-            <button
-              type="button"
-              onClick={handleCancel}
-              className="btn-secondary-dashboard"
-            >
+            <button type="button" onClick={handleCancel} className="btn-secondary-dashboard">
               Cancel
             </button>
-            <button
-              type="submit"
-              className="btn-primary-dashboard"
-            >
+            <button type="submit" className="btn-primary-dashboard">
               Add Task
             </button>
           </div>

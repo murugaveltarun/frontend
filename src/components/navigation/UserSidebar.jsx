@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import { getApi } from "../../utils/api";
-import { useNavigate, Outlet } from "react-router-dom";
+import { checkTokenOrRefresh } from "../../utils/checkTokenOrRefresh";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { Power, RotateCcw, Search } from "lucide-react";
 import { AuthContext } from "../../pages/auth/AuthContext";
 import ConfirmModel from "../model/ConfirmModel";
+import toast from "react-hot-toast";
 
 function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
-  let { setTasks } = useContext(AuthContext);
-
+  let { setTasks, token, setToken } = useContext(AuthContext);
+  const location = useLocation();
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
@@ -19,17 +21,48 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
   const [includeOverdue, setIncludeOverdue] = useState("");
   const [buttonText, setButtonText] = useState("Search");
   const [confirm, setConfirm] = useState(false);
+
+  /* 
   
+  use Effect hooks
+  
+  
+*/
 
   useEffect(() => {
-    if (!status && !priority && !excludeCompleted && !includeOverdue) {
-      console.log("yes");
+    if (token) {
       handleClear();
+    }
+  }, [token]);
+
+  // Refresh tasks when navigated from other endpoints
+  useEffect(() => {
+    if (location.pathname == "/user-dashboard") {
+      handleClear();
+    }
+  }, [location.pathname]);
+
+  // to work even when user presses clear button even though all fields are empty
+  useEffect(() => {
+    if (!status && !priority && !excludeCompleted && !includeOverdue) {
+      handleSearch();
     } else {
       handleSearch();
     }
   }, [status, priority, excludeCompleted, includeOverdue]);
 
+  {
+    /* 
+
+  
+  handles
+  
+
+  
+  */
+  }
+
+  // for searching tasks
   const handleSearch = async (e) => {
     e?.preventDefault();
     if (!title && !description && !status && !priority && !includeOverdue && !excludeCompleted) {
@@ -42,14 +75,26 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
       const url = `${
         import.meta.env.VITE_BACKEND_URL
       }/tasks/search?title=${title}&description=${description}&status=${status}&priority=${priority}&overdue=${includeOverdue}&excludeCompleted=${excludeCompleted}`;
-      const response = await getApi().get(url);
-      setTasks(response.data.data);
+
+      const validToken = await checkTokenOrRefresh(token, navigate);
+      if (!validToken) return;
+      setToken(validToken);
+
+      const response = await getApi(validToken).get(url);
+      if (response.data.status == 200) {
+        setTasks(response.data.data);
+      }
     } catch (e) {
+      console.log(e.status);
+      if (e.request) {
+        toast.error("Error while fetching task. Please try again later.");
+      }
       console.log(e);
     }
     setButtonText("Search");
   };
 
+  // for clearing filters and get all tasks
   const handleClear = async (e) => {
     e?.preventDefault();
     setTitle("");
@@ -58,14 +103,26 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
     setStatus("");
     setExcludeCompleted("");
     setIncludeOverdue("");
-
     try {
       const url = `${import.meta.env.VITE_BACKEND_URL}/tasks`;
-      const response = await getApi().get(url);
+
+      //check before whether the access token is valid or not
+      const validToken = await checkTokenOrRefresh(token, navigate);
+      if (!validToken) return;
+      setToken(validToken);
+
+      //clear request
+      const response = await getApi(validToken).get(url);
       console.log("clearhandle");
       console.log(response);
-      setTasks(response.data.data);
+      if (response.data.status == 200) {
+        setTasks(response.data.data);
+      }
     } catch (e) {
+      console.log(e.status);
+      if (e.request) {
+        toast.error("Error while fetching task. Please try again later.");
+      }
       console.error(e);
     }
   };
@@ -76,7 +133,7 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
         <ConfirmModel
           message={"Are you sure you want to Logout?"}
           handleYes={() => {
-            navigate("/logout")
+            navigate("/logout");
           }}
           setConfirm={setConfirm}
           text={"Logout"}

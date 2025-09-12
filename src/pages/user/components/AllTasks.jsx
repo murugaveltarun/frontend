@@ -1,8 +1,8 @@
 import  {  useContext, useState } from "react";
-import { AuthContext } from "../auth/AuthContext";
+import { AuthContext } from "../../auth/AuthContext";
 import TaskCard from "./TaskCard";
 import NoTaskFound from "./NoTaskFound";
-import { sort } from "../../utils/sort";
+import { sort } from "../../../utils/sort";
 
 const sortParams = ["dueDateAsc", "dueDateDesc", "createdAtAsc", "createdAtDesc", "lastModifiedAtAsc", "lastModifiedAtDesc", "titleAsc", "titleDesc"];
 
@@ -11,15 +11,13 @@ function AllTasks() {
 
   let { tasks } = useContext(AuthContext);
   const sortedTasks = sort(tasks, sortOrder);
-  console.log(sortOrder)
   console.log(sortedTasks)
 
-  console.log(tasks);
   return (
     <div className="">
       <div className="flex flex-row justify-between items-center text-sm md:text-md">
         {sortedTasks.length != 0 && (
-          <div cla>
+          <div >
             <span className="pl-4 pb-4 ">Showing {tasks.length} tasks.</span>
           </div>
         )}

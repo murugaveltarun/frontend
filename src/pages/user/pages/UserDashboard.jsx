@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import UserSidebar from "../../components/navigation/UserSidebar";
+import UserSidebar from "../../../components/navigation/UserSidebar";
 import { jwtDecode } from "jwt-decode";
-import UserHeader from "./UserHeader";
+import UserHeader from "../components/UserHeader";
+import { Toaster } from "react-hot-toast";
 
 function UserDashboard() {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -23,6 +24,7 @@ function UserDashboard() {
 
   return (
     <>
+
       <div className=" flex bg-background dark:bg-bg-primary dark:text-text-primary text-dark-gray h-screen transition-transform duration-400 selection:bg-accent selection:text-white dark:selection:bg-gradient-mid-color">
         <div>
           <UserSidebar sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} user={user} />

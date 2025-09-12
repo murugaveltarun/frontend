@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 let api = null;
 //created only when a user login
 export const createApi = (token) => {
-    api = axios.create({baseURL : import.meta.env.VITE_BACKEND_URL})
+    api = axios.create({baseURL : import.meta.env.VITE_BACKEND_URL, withCredentials: true})
     api.interceptors.request.use((config) => {
         if(token){
             config.headers.Authorization = `Bearer ${token}`
@@ -26,11 +26,15 @@ export const createApi = (token) => {
 }
 
 //uses every time when the client communicates to backend
-export const getApi = () => {
-    if (!api){
-        throw new Error("api not initialized. call createApi token after login")
-    }
-    return api
+export const getApi = (token) => {
+    return axios.create({
+      baseURL: import.meta.env.VITE_BACKEND_URL,
+      withCredentials: true,
+      headers : {
+        Authorization: token? `Bearer ${token}` : undefined,
+      }
+    });
+    
 };
 
 

@@ -47,6 +47,7 @@ function Login() {
         },
         {
           headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         }
       );
 
@@ -59,8 +60,10 @@ function Login() {
         const decode = jwtDecode(response.data.data);
         setTimeout(() => {
           if (decode.role === "ROLE_USER") {
+            localStorage.setItem("role", "ROLE_USER");
             navigate("/user-dashboard");
           } else if (decode.role === "ROLE_ADMIN") {
+            localStorage.setItem("role", "ROLE_ADMIN");
             navigate("/admin-dashboard");
           } else {
             navigate("/unauthorized");

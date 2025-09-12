@@ -1,34 +1,24 @@
 import React from "react";
-import  {jwtDecode}  from "jwt-decode";
 import { Navigate } from "react-router-dom";
 
-function ProtectedRoute({children,allowedRoles}) {
-  const token = localStorage.getItem("token");
+function ProtectedRoute({ children, allowedRoles }) {
+  const role = localStorage.getItem("role");
 
-  if (!token) {
+  if (!role) {
     return <Navigate to="/login" replace />;
   }
 
-  try {
-    const decoded = jwtDecode(token);
-    const tokenExpiry = new Date(decoded.exp * 1000);
-
-    if (new Date() < tokenExpiry) {
-      if (allowedRoles.includes(decoded.role)) {
-        console.log("Login success")
-        return children;
-      }else{
-        console.log("Bad role.");
-        return <Navigate to="/unauthorized" replace />
-      }
-    } else {
-      console.log("Bad access");
-      return <Navigate to="/unauthorized" replace />;
-    }
-  } catch (e) {
-    console.error("Invalid token:", e);
-    return <Navigate to="/login" replace />;
+  if (!allowedRoles.includes(role)) {
+    // navigating to their dashboard
+    return (
+      <Navigate
+        to={role === "ROLE_ADMIN" ? "/admin-dashboard" : "/user-dashboard"}
+        replace
+      />
+    );
   }
+
+  return children;
 }
 
 export default ProtectedRoute;

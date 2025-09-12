@@ -1,5 +1,5 @@
-import EditTask from "./EditTask";
-import ViewTask from "./ViewTask";
+import EditTask from "../components/EditTask";
+import ViewTask from "../components/ViewTask";
 import { useState } from "react";
 
 function TaskPage() {

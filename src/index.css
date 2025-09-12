@@ -158,6 +158,15 @@ h4 {
   @apply flex flex-row justify-center items-center rounded-lg border border-red-500 px-6 py-2 m-6 transition duration-300 ease-in-out hover:scale-105 bg-red-500 text-white 
 }
 
+
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   opacity: 0;
+}
+
+.my-toast {
+  @apply bg-white text-gray-700 border border-accent rounded-lg shadow-lg px-4 py-2;
+}
+
+.dark .my-toast {
+  @apply bg-bg-primary text-white border-gradient-mid-color;
 }

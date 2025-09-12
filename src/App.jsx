@@ -5,15 +5,15 @@ import Home from "./pages/home/Home";
 import { Routes, Route, Link } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import UserDashboard from "./pages/user/UserDashboard";
+import UserDashboard from "./pages/user/pages/UserDashboard";
 import AdminHome from "./pages/admin/AdminHome";
-import AddTask from "./pages/user/AddTask";
-import AllTasks from "./pages/user/AllTasks";
+import AddTask from "./pages/user/components/AddTask";
+import AllTasks from "./pages/user/components/AllTasks";
 import Forbidden from "./components/error/Forbidden";
 import NotFound from "./components/error/NotFound";
 import Unauthorized from "./components/error/Unauthorized";
 import Logout from "./pages/auth/Logout";
-import TaskPage from "./pages/user/TaskPage";
+import TaskPage from "./pages/user/pages/TaskPage";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -58,7 +58,7 @@ function App() {
           <Route index element={<AdminHome />} />
         </Route>
       </Routes>
-      <Toaster position="bottom-right" reverseOrder={false} />
+      <Toaster position="bottom-right" reverseOrder={false} toastOptions={{className : "my-toast",unstyled:true}} />
     </>
   );
 }
