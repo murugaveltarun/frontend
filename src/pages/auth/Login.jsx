@@ -3,8 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { AuthContext } from "./AuthContext";
-import toast from "react-hot-toast";
 import { EyeIcon, EyeOff } from "lucide-react";
+import { publicToast } from "../../components/toast/PublicToast";
 
 function Login() {
   const { login } = useContext(AuthContext);
@@ -56,7 +56,7 @@ function Login() {
         setUsername("");
         setPassword("");
         setButtonText("Logged in!");
-        toast.success("User Verified! Navigating to dashboard...");
+        publicToast.success("User Verified! Navigating to dashboard...");
         const decode = jwtDecode(response.data.data);
         setTimeout(() => {
           if (decode.role === "ROLE_USER") {
@@ -76,21 +76,21 @@ function Login() {
         if (error.response.status === 401) {
           setBadCredentials(true);
         } else {
-          toast.error("Something went wrong. Try again later.");
+          publicToast.error("Something went wrong. Try again later.");
         }
       } else if (!navigator.onLine) {
-        toast.error("Check your internet connection.");
+        publicToast.error("Check your internet connection.");
       } else if (error.request) {
-        toast.error("Server Offline. Try again later.");
+        publicToast.error("Server Offline. Try again later.");
       } else {
-        toast.error("Something went wrong. Try again later.");
+        publicToast.error("Something went wrong. Try again later.");
       }
     }
   };
 
   return (
     <>
-      <div className="flex justify-center items-center h-screen bg-bg-primary">
+      <div className="flex justify-center items-center min-h-screen bg-bg-primary">
         <div className=" min-h-screen/2 ">
           <div className="card w-fit m-4 sm:m-0 ">
             <h4 className="m-2 sm:m-7 text-sm ">Login to your Account</h4>
@@ -136,16 +136,20 @@ function Login() {
                   {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
                 </div>
 
+                    
                 {badCredentials && <p className="text-red-500 text-sm">Login failed: invalid credentials or user not found.</p>}
-                <div className="flex justify-center w-full ">
-                  <button className="btn-primary mt-5 sm:text-xl sm:m-7" type="submit">
+                
+                <div className="flex flex-col items-center justify-center w-full ">
+                  <button className="btn-primary w-fit mt-5 sm:text-xl " type="submit">
                     {buttonText}
                   </button>
+                {badCredentials && <a href="/forgot-password" className=" my-3 sm:my-5 sm:mt-2 text-md text-white text-end hover:underline">Forgot your password?</a>}
+
                 </div>
               </form>
               <p className="text-lg text-gray-300">
                 New to Task Wiser?{" "}
-                <a href="/register" className="text-white hover:scale-105 font-medium underline">
+                <a href="/register" className="text-white hover:underline font-medium ">
                   Register
                 </a>
               </p>

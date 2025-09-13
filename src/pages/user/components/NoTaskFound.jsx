@@ -11,10 +11,10 @@ function NoTaskFound() {
         <h5 className="text-2xl">Task Not Found</h5>
                 <button
           onClick={() => {console.log("clicked!!!");navigate("add")}}
-          className="select-none cursor-pointer flex gap-3 m-10 p-5 justify-center items-center rounded-2xl text-bg-surface dark:text-white  hover:scale-105 transition-transform duration-600 ease-in-out  border-bg-surface dark:border-white border-1  "
+          className="select-none cursor-pointer flex gap-3 m-10 p-3 justify-center items-center rounded-2xl text-bg-surface dark:text-white  hover:scale-105 transition-transform duration-600 ease-in-out  border-bg-surface dark:border-white border-1  "
         >
-          <Plus className="w-10 h-10" />
-          <span className=" text-4xl ">Add New Task</span>
+          <Plus className="w-6 h-6" />
+          <span className=" text-lg ">Add New Task</span>
         </button>
       </div>
     </div>

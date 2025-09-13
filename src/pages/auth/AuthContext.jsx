@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
 
   const login = (newToken) => {
     localStorage.setItem("token", newToken);
+    localStorage.setItem("theme","dark");
     setToken(newToken);
     createApi(newToken);
     const decoded = jwtDecode(newToken);

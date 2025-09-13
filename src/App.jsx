@@ -2,8 +2,8 @@ import "./App.css";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./pages/home/Home";
-import { Routes, Route, Link } from "react-router-dom";
-import ProtectedRoute from "./components/ProtectedRoute";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
+import ProtectedRoute from "./components/protected/ProtectedRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import UserDashboard from "./pages/user/pages/UserDashboard";
 import AdminHome from "./pages/admin/AdminHome";
@@ -15,8 +15,12 @@ import Unauthorized from "./components/error/Unauthorized";
 import Logout from "./pages/auth/Logout";
 import TaskPage from "./pages/user/pages/TaskPage";
 import { Toaster } from "react-hot-toast";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 function App() {
+  const location = useLocation();
+  const isDashboard = location.pathname.startsWith("/user-dashboard") || location.pathname.startsWith("/admin-dashboard") 
   return (
     <>
       <Routes>
@@ -25,8 +29,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-        {/* error handling pages */ }
+        {/* error handling pages */}
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="forbidden" element={<Forbidden />} />
         <Route path="*" element={<NotFound />} />
@@ -58,7 +64,8 @@ function App() {
           <Route index element={<AdminHome />} />
         </Route>
       </Routes>
-      <Toaster position="bottom-right" reverseOrder={false} toastOptions={{className : "my-toast",unstyled:true}} />
+        <Toaster position="bottom-right" reverseOrder={false} toastOptions={{ className:isDashboard? "my-toast" : "my-toast-public", unstyled: true }} />
+
     </>
   );
 }

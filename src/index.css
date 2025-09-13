@@ -170,3 +170,5 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 .dark .my-toast {
   @apply bg-bg-primary text-white border-gradient-mid-color;
 }
+
+
