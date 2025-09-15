@@ -18,13 +18,24 @@ export async function checkTokenOrRefresh(token, navigate) {
       }
       return newAccessToken;
     } catch (e) {
-      if (!navigator.onLine) {
-        toast.error("Check your internet connection");
-        return null;
-      } 
-      if (e.request) {
-        toast.error("Server Error. Please Try again later.");
-        return null;
+      if (e.response.status == 401) {
+        if(e.response.data.message == "Refresh Token not found. Please login."){
+          toast.error("Token not found. Please login");
+          navigate("/login")
+        }else if(e.response.data.message.includes("JWT expired")){
+          toast.error("Login Expired. Please login");
+          navigate("/login")
+        }
+        console.log(e.response.data.message)
+      } else {
+        if (!navigator.onLine) {
+          toast.error("Check your internet connection");
+          return null;
+        }
+        if (e.request) {
+          toast.error("Server Error. Please Try again later.");
+          return null;
+        }
       }
 
       console.log(e.status);

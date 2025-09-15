@@ -6,6 +6,7 @@ import { AuthContext } from "./AuthContext";
 import { EyeIcon, EyeOff } from "lucide-react";
 import { publicToast } from "../../components/toast/PublicToast";
 import GoogleOauth from "./GoogleOauth";
+import GithubOauth from "./GithubOauth";
 
 function Login() {
   const { login } = useContext(AuthContext);
@@ -156,6 +157,7 @@ function Login() {
               </p>
             </div>
             <GoogleOauth />
+            <GithubOauth />
           </div>
         </div>
       </div>

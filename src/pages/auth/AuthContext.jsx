@@ -19,10 +19,10 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-
   const login = (newToken) => {
     localStorage.setItem("token", newToken);
-    localStorage.setItem("theme","dark");
+    localStorage.setItem("theme", "dark");
+    document.documentElement.classList.add("dark");
     setToken(newToken);
     createApi(newToken);
     const decoded = jwtDecode(newToken);
@@ -37,9 +37,5 @@ export function AuthProvider({ children }) {
     setRole(null);
   };
 
-  return (
-    <AuthContext.Provider value={{ token, role, login, logout, tasks, setTasks, setToken }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ token, role, login, logout, tasks, setTasks, setToken }}>{children}</AuthContext.Provider>;
 }
