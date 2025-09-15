@@ -3,8 +3,6 @@ import { Link, Outlet } from "react-router-dom";
 import UserSidebar from "../../../components/navigation/UserSidebar";
 import { jwtDecode } from "jwt-decode";
 import UserHeader from "../components/UserHeader";
-import { Toaster } from "react-hot-toast";
-
 function UserDashboard() {
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
@@ -30,7 +28,7 @@ function UserDashboard() {
         </div>
         <main className="flex flex-col flex-1">
           <UserHeader setSideBarOpen={setSideBarOpen} sideBarOpen={sideBarOpen} theme={theme} setTheme={setTheme} />
-          <div className="m-1 md:m-8 custom-scroll md:pr-5 pr-1">
+          <div className=" m-1 md:m-8 custom-scroll md:pr-5 pr-1 justify-center items-center">
             <Outlet />
           </div>
         </main>

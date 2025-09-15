@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import { AuthContext } from "./AuthContext";
 import { EyeIcon, EyeOff } from "lucide-react";
 import { publicToast } from "../../components/toast/PublicToast";
+import GoogleOauth from "./GoogleOauth";
 
 function Login() {
   const { login } = useContext(AuthContext);
@@ -154,6 +155,7 @@ function Login() {
                 </a>
               </p>
             </div>
+            <GoogleOauth />
           </div>
         </div>
       </div>

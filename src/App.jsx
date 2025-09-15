@@ -17,6 +17,7 @@ import TaskPage from "./pages/user/pages/TaskPage";
 import { Toaster } from "react-hot-toast";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import OauthCallBack from "./pages/auth/OauthCallBack";
 
 function App() {
   const location = useLocation();
@@ -31,6 +32,8 @@ function App() {
         <Route path="/logout" element={<Logout />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/oauth2/callback/:token" element={<OauthCallBack />} />
+
 
         {/* error handling pages */}
         <Route path="unauthorized" element={<Unauthorized />} />

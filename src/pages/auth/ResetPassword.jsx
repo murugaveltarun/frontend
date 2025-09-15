@@ -89,7 +89,15 @@ function ResetPassword() {
       }
     } catch (error) {
       setButtonText("Submit");
-      if (!navigator.onLine) {
+      if (error.response) {
+        if (error.response.status === 401) {
+            publicToast.error("Request again to reset password.")
+        }else if (error.response.status === 404){
+            publicToast.error("Request token not found. Request to reset password again.")
+        } else {
+          publicToast.error("Something went wrong. Try again later.");
+        }
+      } else if (!navigator.onLine) {
         publicToast.error("Check your internet connection.");
       } else if (error.request) {
         publicToast.error("Server Offline. Try again later.");
