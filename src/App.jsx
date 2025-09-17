@@ -6,7 +6,7 @@ import { Routes, Route, Link, useLocation } from "react-router-dom";
 import ProtectedRoute from "./components/protected/ProtectedRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import UserDashboard from "./pages/user/pages/UserDashboard";
-import AdminHome from "./pages/admin/AdminHome";
+import AdminHome from "./pages/admin/pages/AdminHome";
 import AddTask from "./pages/user/components/AddTask";
 import AllTasks from "./pages/user/components/AllTasks";
 import Forbidden from "./components/error/Forbidden";
@@ -65,6 +65,12 @@ function App() {
           }
         >
           <Route index element={<AdminHome />} />
+          {/* <Route path="users" element={<AllUsers />} />
+          <Route path="tasks" element={<AllTasks />} />
+          <Route path="stats" element={<AllStats />} />
+          <Route path="users/:userid/" element={<User />} />
+          <Route path="users/:userid/tasks" element={<UserTasks />} />
+          <Route path="users/:userid/tasks/:taskid" element={<UserTasks />} /> */}
         </Route>
       </Routes>
         <Toaster position="bottom-right" reverseOrder={false} toastOptions={{ className:isDashboard? "my-toast" : "my-toast-public", unstyled: true }} />

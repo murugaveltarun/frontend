@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle, EyeIcon, EyeOff, XCircle } from "lucide-react";
 import { publicToast } from "../../components/toast/PublicToast";
+import GoogleOauth from "./GoogleOauth";
+import GithubOauth from "./GithubOauth";
 
 function Register() {
   const [name, setName] = useState("");
@@ -63,10 +65,14 @@ function Register() {
         setButtonText("Register");
       }
       if (!email) {
-        setPasswordError("Email cannot be empty!");
+        setEmailError("Email cannot be empty!");
         setButtonText("Register");
       }
       return;
+    }
+
+    if (username.length >= 5) {
+      setUsernameError("Username should have atleast 5 characters.");
     }
 
     if (!(passwordChecks.small && passwordChecks.capital && passwordChecks.special && passwordChecks.number && passwordChecks.length)) {
@@ -123,11 +129,15 @@ function Register() {
       <div className="flex justify-center items-center min-h-screen p-4 bg-bg-primary">
         <div className="min-h-screen/2">
           <div className="card w-fit m-4 sm:m-0">
-            <h4 className="m-2 sm:m-7 text-sm ">Create your Account</h4>
+            <div className=" flex w-full p-7 sm:p-4 flex-col sm:flex-row justify-center items-center gap-5 text-sm md:text-md">
+              <GoogleOauth  />
+              <GithubOauth />
+            </div>
+            <h4 className="m-2 sm:m-5 text-sm ">Create your Account</h4>
 
-            <div className="flex flex-col m-2 sm:m-10 gap-3">
+            <div className="flex flex-col m-2 sm:m-4 gap-3">
               <form onSubmit={handleSubmit} className="flex flex-col gap-2 justify-center text-left">
-                <label className="text-neutral-300 mt-3">Name</label>
+                <label className="text-neutral-300">Name</label>
                 <div className="flex flex-col  justify-center text-left">
                   <input
                     type="name"
@@ -191,26 +201,28 @@ function Register() {
                     )}
                   </div>
                   {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
-                  <div className="ml-2">
-                    <p className="text-neutral-300 text-sm mt-1">Password should contain atleast :</p>
-                    <div className="text-sm ml-4 mt-1">
-                      {passwordErrors.map((error, index) => (
-                        <p className={`${error == null ? "text-neutral-300" : error ? "text-green-500" : "text-red-500"} flex gap-2 items-center`}>
-                          {error == null ? (
-                            <CheckCircle className="w-3 h-3 text-neutral-300" />
-                          ) : error ? (
-                            <CheckCircle className="w-3 h-3 text-green-500" />
-                          ) : (
-                            <XCircle className="w-3 h-3 text-red-500" />
-                          )}
-                          {passwordErrorTexts[index]}
-                        </p>
-                      ))}
+                  {password && (
+                    <div className="ml-2">
+                      <p className="text-neutral-300 text-sm mt-1">Password should contain atleast :</p>
+                      <div className="text-sm ml-4 mt-1">
+                        {passwordErrors.map((error, index) => (
+                          <p className={`${error == null ? "text-neutral-300" : error ? "text-green-500" : "text-red-500"} flex gap-2 items-center`}>
+                            {error == null ? (
+                              <CheckCircle className="w-3 h-3 text-neutral-300" />
+                            ) : error ? (
+                              <CheckCircle className="w-3 h-3 text-green-500" />
+                            ) : (
+                              <XCircle className="w-3 h-3 text-red-500" />
+                            )}
+                            {passwordErrorTexts[index]}
+                          </p>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
                 <div className="flex justify-center w-full">
-                  <button className="btn-primary m-3 sm:text-xl sm:m-7" type="submit">
+                  <button className="btn-primary m-3 sm:text-xl sm:m-4" type="submit">
                     {buttonText}
                   </button>
                 </div>

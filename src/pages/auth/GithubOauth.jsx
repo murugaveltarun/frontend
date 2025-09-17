@@ -1,6 +1,6 @@
 
 
-function GoogleOauth() {
+function GithubOauth() {
   const URL = import.meta.env.VITE_BACKEND_URL;
 
 
@@ -12,11 +12,11 @@ function GoogleOauth() {
 
   return (
     <div>
-      <button onClick={handleLogin} className="bg-red-600 text-white">
-        Google login
+      <button onClick={handleLogin} className= "cursor-pointer select-none hover:scale-110 transistion-transform duration-600 ease-in-out p-2 rounded-lg border-1 border-neutral-700 text-white bg-[#222123] flex pl-2 items-center justify-center gap-4">
+        <img src="github.png" alt="google" className="h-8" />  Sign in with GitHub
       </button>
     </div>
   );
 }
 
-export default GoogleOauth;
+export default GithubOauth;
