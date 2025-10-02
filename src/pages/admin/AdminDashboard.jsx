@@ -3,6 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 import AdminSidebar from "../../components/navigation/AdminSidebar";
 import { jwtDecode } from "jwt-decode";
 import AdminHeader from "./pages/AdminHeader";
+import AdminNavbar from "../../components/navigation/AdminNavbar";
 function AdminDashboard() {
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
@@ -26,9 +27,10 @@ function AdminDashboard() {
         <div>
           <AdminSidebar sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} admin={admin} />
         </div>
-        <main className="flex flex-col flex-1">
+        <main className="flex flex-col overflow-auto custom-scroll w-full">
           <AdminHeader setSideBarOpen={setSideBarOpen} sideBarOpen={sideBarOpen} theme={theme} setTheme={setTheme} />
-          <div className=" m-1 md:m-8 custom-scroll md:pr-5 pr-1 justify-center items-center">
+          <AdminNavbar />
+          <div className="overflow-autoflex m-1 md:p-8 md:pr-5 pr-1 justify-center items-center">
             <Outlet />
           </div>
         </main>

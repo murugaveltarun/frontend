@@ -13,6 +13,7 @@
   --color-border-color: #718096;
   --color-accent: #00a39c;
   --color-dark-accent: #80d1c8;
+  --color-light-accent: #99dad2;
 
   --color-status-completed: #28a745;
   --color-status-not-started: #6c757d;
@@ -59,7 +60,7 @@ h4 {
 }
 
 @utility btn-primary {
-  @apply select-none cursor-pointer bg-bg-primary border border-border-color rounded-full px-5 py-2 transition-all duration-300 text-text-primary font-medium transform hover:scale-105;
+  @apply select-none cursor-pointer bg-bg-primary border border-border-color rounded-full px-5 py-2   text-text-primary font-medium transform hover:scale-105;
 }
 
 @utility text-gradient {
@@ -67,15 +68,16 @@ h4 {
 }
 
 @utility btn-secondary {
-  @apply select-none cursor-pointer bg-transparent border border-border-color rounded-full px-5 py-2 transition-transform duration-300 text-text-primary font-medium transform hover:scale-105;
+  @apply select-none cursor-pointer bg-transparent border border-border-color rounded-full px-5 py-2    text-text-primary font-medium transform hover:scale-105;
 }
 @utility card {
   @apply w-full bg-white/5 backdrop-blur-md border border-white/10 shadow-xl rounded-2xl p-8 text-center;
 }
 
 @utility custom-scroll {
-  @apply overflow-y-auto
-  [&::-webkit-scrollbar]:w-2
+  @apply overflow-auto
+  [&::-webkit-scrollbar]:w-1
+  [&::-webkit-scrollbar]:h-1
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-accent/30
   [&::-webkit-scrollbar-thumb]:rounded-full
@@ -95,73 +97,13 @@ h4 {
   }
 }
 
-@utility status-completed {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:bg-status-completed peer-checked:text-white peer-checked:border-none transition;
-}
-
-@utility status-not-started {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:bg-status-not-started peer-checked:text-white peer-checked:border-none transition;
-}
-
-@utility status-in-progress {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:bg-status-in-progress peer-checked:text-white peer-checked:border-none transition;
-}
-
-@utility status-all {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:bg-accent dark:peer-checked:bg-gradient-mid-color  peer-checked:text-white peer-checked:border-none transition;
-}
-
-@utility priority-high {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:bg-priority-high peer-checked:text-white peer-checked:border-none transition;
-}
-
-@utility priority-medium {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:bg-priority-medium peer-checked:text-white peer-checked:border-none transition;
-}
-
-@utility priority-low {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:bg-priority-low peer-checked:text-white peer-checked:border-none transition;
-}
-
-@utility priority-high-tag {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color bg-priority-high text-white border-none;
-}
-
-@utility priority-medium-tag {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color  bg-priority-medium text-white border-none;
-}
-
-@utility priority-low-tag {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color bg-priority-low text-white border-none;
-}
-
-@utility priority-all {
-  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:bg-accent dark:peer-checked:bg-gradient-mid-color dark:border-border-color peer-checked:text-white peer-checked:border-none transition;
-}
-@utility gradient-card {
-  @apply dark:bg-gradient-to-tl dark:from-neutral-50/10 dark:to-gradient-mid-color/5;
-}
-
-@utility btn-primary-dashboard {
-  @apply flex gap-3 p-4 py-2 justify-center items-center rounded-2xl  hover:scale-110 transition-transform duration-600 ease-in-out text-white bg-accent dark:bg-gradient-mid-color;
-}
-
-@utility btn-secondary-dashboard {
-  @apply p-2 px-3 rounded-2xl hover:scale-110 transition-transform duration-600 ease-in-out text-dark-gray bg-background dark:border-gradient-mid-color dark:bg-inherit border-1 border-sidebar-border dark:text-gradient-mid-color dark:border-border-color;
-}
-
-@utility input-field {
-  @apply flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border dark:border-border-color rounded-2xl max-w-[60%] caret-sidebar-border  dark:caret-gradient-mid-color focus:border-sidebar-border dark:focus:border-gradient-mid-color focus:outline-none;
-}
-
-@utility red-button {
-  @apply flex flex-row justify-center items-center rounded-lg border border-red-500 px-6 py-2 m-6 transition duration-300 ease-in-out hover:scale-105 bg-red-500 text-white 
-}
-
+/* to hide default calendar icon  */
 
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   opacity: 0;
 }
+
+/* custom toast  */
 
 .my-toast {
   @apply bg-white text-gray-700 border border-accent rounded-lg shadow-lg px-4 py-2;
@@ -172,3 +114,171 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 
 
+
+/* dashboard tags */
+
+@utility dash-tag-common {
+  @apply w-full text-center text-xs sm:text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:text-white peer-checked:border-none;
+}
+
+@utility status-completed {
+  @apply dash-tag-common peer-checked:bg-status-completed;
+}
+
+@utility status-not-started {
+  @apply  dash-tag-common peer-checked:bg-status-not-started;
+}
+
+@utility status-in-progress {
+  @apply  dash-tag-common peer-checked:bg-status-in-progress;
+}
+
+@utility status-all {
+  @apply dash-tag-common peer-checked:bg-accent/70 dark:peer-checked:bg-gradient-mid-color/40;
+}
+
+@utility priority-high {
+  @apply  dash-tag-common peer-checked:bg-priority-high;
+}
+
+@utility priority-medium {
+  @apply  dash-tag-common peer-checked:bg-priority-medium;
+} 
+
+@utility priority-low {
+  @apply  dash-tag-common peer-checked:bg-priority-low;
+}
+
+@utility priority-all {
+  @apply dash-tag-common peer-checked:bg-accent/70 dark:peer-checked:bg-gradient-mid-color/40 ;
+}
+
+
+/* task page tags */
+
+@utility task-tag-common {
+  @apply text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color text-white border-none;
+}
+
+@utility priority-high-tag {
+  @apply task-tag-common bg-priority-high ;
+}
+
+@utility priority-medium-tag {
+  @apply task-tag-common bg-priority-medium;
+}
+
+@utility priority-low-tag {
+  @apply task-tag-common bg-priority-low;
+}
+
+
+/* gradient card */
+
+@utility gradient-card {
+  @apply dark:bg-gradient-to-tl dark:from-neutral-50/10 dark:to-gradient-mid-color/5;
+}
+
+
+/* theme buttons */
+
+@utility btn-primary-dashboard {
+  @apply flex gap-3 p-4 py-2 justify-center items-center rounded-2xl  hover:scale-110 ease-in-out text-white bg-accent dark:bg-gradient-mid-color;
+}
+
+@utility btn-secondary-dashboard {
+  @apply p-2 px-3 rounded-2xl hover:scale-110 ease-in-out text-dark-gray bg-background dark:border-gradient-mid-color dark:bg-inherit border-1 border-sidebar-border dark:text-gradient-mid-color;
+}
+
+/* input tag  */
+
+@utility input-field {
+  @apply flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border dark:border-border-color rounded-2xl max-w-[60%] caret-sidebar-border  dark:caret-gradient-mid-color focus:border-sidebar-border dark:focus:border-gradient-mid-color focus:outline-none;
+}
+
+/* logout button */
+
+@utility red-button {
+  @apply flex flex-row justify-center items-center rounded-lg border border-red-500 px-6 py-2 m-6   ease-in-out hover:scale-105 bg-red-500 text-white;
+}
+
+/* sorting selection tag  */
+
+@utility sort-bubble {
+  @apply appearance-none flex-1 bg-white dark:bg-bg-surface sm:ml-5 px-2 py-0.5 border border-sidebar-border rounded-lg max-w-[60%] caret-sidebar-border dark:caret-gradient-mid-color  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none;
+}
+
+/* table styles  */
+
+@utility table-container {
+  @apply overflow-auto  custom-scroll flex flex-col gap-5;
+}
+
+@utility table-heading {
+  @apply p-2 bg-light-accent dark:bg-dark-purple;
+}
+
+@utility table-body {
+  @apply p-2 py-1.5;
+}
+
+@utility table-class {
+  @apply border-separate border-spacing-[0px] border-spacing-x-[1px] table-fixed w-full p-1 bg-light-accent dark:bg-dark-purple rounded-2xl;
+}
+
+@utility table-page {
+  @apply px-2 py-2 text-center rounded-b-2xl text-sm border-t-[1px] border-light-accent dark:border-dark-purple;
+}
+
+.link {
+  @apply hover:underline cursor-pointer;
+}
+
+
+/* dashboard */
+
+@utility dash-inp {
+  @apply flex-1 bg-white dark:bg-bg-surface sm:ml-5 px-2 py-1 border border-sidebar-border rounded-xl sm:rounded-xl max-w-[60%] sm:max-w-[70%] caret-sidebar-border  dark:caret-gradient-mid-color focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none;
+}
+
+@utility btn-dash-icon {
+  @apply w-3 h-3 sm:w-5 sm:h-5 mr-2;
+}
+
+@utility btn-dash {
+  @apply flex w-fit  flex-row justify-center  items-center bg-background border-1 border-sidebar-border dark:bg-gradient-mid-color dark:border-border-color  rounded-xl  text-xs sm:text-sm text-dark-gray dark:text-white p-2 h-full hover:scale-110 transition-transform ease-in-out;
+}
+
+@utility dash-comp-div {
+  @apply flex flex-row justify-between items-center 
+}
+
+@utility dash-grid {
+  @apply grid sm:grid-rows-2 grid-cols-2 gap-2 sm:gap-5 w-[75%] sm:w-[70%] justify-start sm:justify-center select-none;
+}
+
+
+@utility add-task-comp{
+  @apply grid md:grid-cols-[150px_1fr] lg:grid-cols-[110px_1fr] items-center gap-1.5 md:gap-5
+}
+
+/* view task  */
+
+@utility back-button {
+  @apply btn-secondary-dashboard w-min h-full p-2 text-xs sm:text-base
+}
+
+@utility edit-button {
+  @apply btn-secondary-dashboard w-min p-2  text-xs sm:text-base
+}
+
+@utility trash-button {
+  @apply sm:w-12 sm:h-12 flex gap-2 justify-center items-center btn-secondary-dashboard p-2 text-xs sm:text-base
+}
+@utility view-task-priority{
+  @apply flex flex-col items-center select-none text-2xl font-bold w-20 h-min
+}
+
+@utility save-button{
+  @apply btn-primary-dashboard w-min p-2  text-xs sm:text-base
+}

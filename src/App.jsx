@@ -18,10 +18,16 @@ import { Toaster } from "react-hot-toast";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import OauthCallBack from "./pages/auth/OauthCallBack";
+import AllStats from "./pages/admin/components/AllStats";
+import AllUsers from "./pages/admin/components/AllUsers";
+import User from "./pages/admin/components/User";
+import UserTask from "./pages/admin/components/UserTask";
+import AllTasksAdmin from "./pages/admin/components/AllTasksAdmin";
+import { UsersProvider } from "./components/context/UsersContext";
 
 function App() {
   const location = useLocation();
-  const isDashboard = location.pathname.startsWith("/user-dashboard") || location.pathname.startsWith("/admin-dashboard") 
+  const isDashboard = location.pathname.startsWith("/user-dashboard") || location.pathname.startsWith("/admin-dashboard");
   return (
     <>
       <Routes>
@@ -33,7 +39,6 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/oauth2/callback/:token" element={<OauthCallBack />} />
-
 
         {/* error handling pages */}
         <Route path="unauthorized" element={<Unauthorized />} />
@@ -60,21 +65,22 @@ function App() {
           path="/admin-dashboard"
           element={
             <ProtectedRoute allowedRoles={["ROLE_ADMIN"]}>
-              <AdminDashboard />
+              <UsersProvider>
+                <AdminDashboard />
+              </UsersProvider>
             </ProtectedRoute>
           }
         >
           <Route index element={<AdminHome />} />
-          {/* <Route path="users" element={<AllUsers />} />
-          <Route path="tasks" element={<AllTasks />} />
+          <Route path="users" element={<AllUsers />} />
+          <Route path="tasks" element={<AllTasksAdmin />} />
           <Route path="stats" element={<AllStats />} />
-          <Route path="users/:userid/" element={<User />} />
-          <Route path="users/:userid/tasks" element={<UserTasks />} />
-          <Route path="users/:userid/tasks/:taskid" element={<UserTasks />} /> */}
+          <Route path="users/:userid" element={<User />} />
+          <Route path="users/:userid/tasks" element={<AllTasksAdmin />} />
+          <Route path="users/:userid/tasks/:taskid" element={<UserTask />} />
         </Route>
       </Routes>
-        <Toaster position="bottom-right" reverseOrder={false} toastOptions={{ className:isDashboard? "my-toast" : "my-toast-public", unstyled: true }} />
-
+      <Toaster position="bottom-right" reverseOrder={false} toastOptions={{ className: isDashboard ? "my-toast" : "my-toast-public", unstyled: true }} />
     </>
   );
 }

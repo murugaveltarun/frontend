@@ -15,7 +15,7 @@ function AllTasks() {
 
   return (
     <div className="">
-      <div className="flex flex-row justify-between items-center text-sm md:text-md">
+      <div className="flex flex-row justify-between items-center text-xs sm:text-sm px-3">
         {sortedTasks.length != 0 && (
           <div >
             <span className="pl-4 pb-4 ">Showing {tasks.length} tasks.</span>
@@ -25,7 +25,7 @@ function AllTasks() {
           <div className="flex flex-row justify-center gap-2 items-center">
             <label htmlFor="sort">Sort By</label>
             <select
-              className="appearance-none flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2  border border-sidebar-border rounded-2xl max-w-[60%] caret-sidebar-border dark:caret-gradient-mid-color  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
+              className="sort-bubble"
               onChange={(e) => setSortOrder(e.target.value)}
               value={sortOrder}
             >

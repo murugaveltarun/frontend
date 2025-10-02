@@ -25,15 +25,14 @@ function TaskCard({ title, description, priority, status, id, dueDate }) {
             : priority === "medium"
             ? "border-priority-medium/50 dark:border-priority-medium bg-priority-medium/5 dark:gradient-card  dark:shadow-priority-medium/40"
             : "border-priority-low/50 dark:border-priority-low bg-priority-low/5 dark:gradient-card  dark:shadow-priority-low/40"
-        } h-50 p-4 rounded-2xl
+        } h-44 sm:h-50 p-4 rounded-2xl
           flex flex-col justify-between shadow-md hover:shadow-lg  cursor-pointer hover:scale-103 transition-all duration-400
           backdrop-filter backdrop-blur-lg 
         `}
-
       >
-        <div className="flex flex-col gap-5">
-          <h2 className="line-clamp-1 font-semibold text-lg tracking-tight ">{title}</h2>
-          <p className="line-clamp-2 mt-1 font-light">{description}</p>
+        <div className="flex flex-col  gap-5">
+          <h2 className="line-clamp-1 font-semibold text-md sm:text-lg tracking-tight">{title}</h2>
+          <p className="line-clamp-2 mt-1 font-light text-md ">{description}</p>
         </div>
         <div className="flex flex-row justify-between ">
           <span
@@ -43,7 +42,7 @@ function TaskCard({ title, description, priority, status, id, dueDate }) {
           >
             {status}
           </span>
-          <p className="flex flex-row justify-center items-center select-none text-sm">
+          <p className="flex flex-row justify-center items-center select-none text-xs sm:text-sm">
             {" "}
             {overdue ? <ClockAlert className="h-3" /> : <Clock className="h-3" />} {getDueInText(dueDate)}
           </p>

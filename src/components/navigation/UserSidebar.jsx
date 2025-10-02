@@ -13,12 +13,30 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("");
-  const [priority, setPriority] = useState("");
-  const [excludeCompleted, setExcludeCompleted] = useState("");
-  const [includeOverdue, setIncludeOverdue] = useState("");
+  //name,values,text,class names
+  const statusArr = [
+    ["completed", "not started", "in progress", "all"],
+    ["completed", "not started", "in progress", ""],
+    ["Completed", "Not Started", "In Progress", "All"],
+    ["status-completed", "status-not-started", "status-in-progress", "status-all"],
+  ];
+  const priorityArr = [
+    ["high", "medium", "low", "all"],
+    ["high", "medium", "low", ""],
+    ["High", "Medium", "Low", "All"],
+    ["priority-high", "priority-medium", "priority-low", "priority-all"],
+  ];
+  const [taskFilter, setTaskFilter] = useState({
+    title: "",
+    description: "",
+    status: "",
+    priority: "",
+    excludeCompleted: "",
+    includeOverdue: "",
+  });
+  const updateTaskFilter = (newUpdate) => {
+    setTaskFilter((prev) => ({ ...prev, ...newUpdate }));
+  };
   const [buttonText, setButtonText] = useState("Search");
   const [confirm, setConfirm] = useState(false);
 
@@ -44,12 +62,12 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
 
   // to work even when user presses clear button even though all fields are empty
   useEffect(() => {
-    if (!status && !priority && !excludeCompleted && !includeOverdue) {
+    if (!taskFilter.status && !taskFilter.priority && !taskFilter.excludeCompleted && !taskFilter.includeOverdue) {
       handleSearch();
     } else {
       handleSearch();
     }
-  }, [status, priority, excludeCompleted, includeOverdue]);
+  }, [taskFilter.status, taskFilter.priority, taskFilter.excludeCompleted, taskFilter.includeOverdue]);
 
   {
     /* 
@@ -65,16 +83,23 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
   // for searching tasks
   const handleSearch = async (e) => {
     e?.preventDefault();
-    if (!title && !description && !status && !priority && !includeOverdue && !excludeCompleted) {
+    if (
+      !taskFilter.title &&
+      !taskFilter.description &&
+      !taskFilter.status &&
+      !taskFilter.priority &&
+      !taskFilter.includeOverdue &&
+      !taskFilter.excludeCompleted
+    ) {
       handleClear();
       return;
     }
 
     setButtonText("Searching...");
     try {
-      const url = `${
-        import.meta.env.VITE_BACKEND_URL
-      }/tasks/search?title=${title}&description=${description}&status=${status}&priority=${priority}&overdue=${includeOverdue}&excludeCompleted=${excludeCompleted}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/tasks/search?title=${taskFilter.title}&description=${taskFilter.description}&status=${
+        taskFilter.status
+      }&priority=${taskFilter.priority}&overdue=${taskFilter.includeOverdue}&excludeCompleted=${taskFilter.excludeCompleted}`;
 
       const validToken = await checkTokenOrRefresh(token, navigate);
       if (!validToken) return;
@@ -97,12 +122,14 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
   // for clearing filters and get all tasks
   const handleClear = async (e) => {
     e?.preventDefault();
-    setTitle("");
-    setDescription("");
-    setPriority("");
-    setStatus("");
-    setExcludeCompleted("");
-    setIncludeOverdue("");
+    updateTaskFilter({
+      title: "",
+      description: "",
+      priority: "",
+      status: "",
+      includeOverdue: "",
+      excludeCompleted: "",
+    });
     try {
       const url = `${import.meta.env.VITE_BACKEND_URL}/tasks`;
 
@@ -123,7 +150,6 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
       if (e.request) {
         toast.error("Error while fetching task. Please try again later.");
       }
-      console.error(e);
     }
   };
 
@@ -141,18 +167,18 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
       )}
       {/* name and username */}
       <div
-        className={`z-1000 bg-text-primary border-r-1 border-sidebar-border dark:bg-bg-primary dark:border-border-color dark:backdrop-blur-md w-80 sm:w-110 max-h-screen sm:min-h-screen shadow-md shadow-accent dark:shadow-gradient-mid-color fixed ${
+        className={`z-1000 bg-text-primary border-r-1 border-sidebar-border dark:bg-bg-primary dark:border-border-color dark:backdrop-blur-md w-80 sm:w-110 max-h-screen min-h-screen shadow-md shadow-accent dark:shadow-gradient-mid-color fixed ${
           sideBarOpen ? "-translate-x-0" : "-translate-x-80 sm:-translate-x-110"
-        } lg:-translate-x-0 lg:static flex flex-col transition-transform duration-300 ease-in-out overflow-y-auto  custom-scroll`}
+        } lg:-translate-x-0 lg:static flex flex-col transition-transform ease-in-out overflow-y-auto  custom-scroll`}
       >
-        <div className="flex p-5 h-30 justify-between border-sidebar-border dark:border-border-color border-b-1">
+        <div className="flex p-3 sm:p-5 h-20 sm:h-30 justify-between border-sidebar-border dark:border-border-color border-b-1">
           <div className="flex flex-row justify-center items-center ">
-            <div className="select-none hover:scale-105 transition-transform transform-500 ease-in-out flex justify-center items-center text-white bg-accent dark:bg-gradient-mid-color text-5xl  h-20 w-20 rounded-[50%] font-extrabold mr-8">
+            <div className="select-none hover:scale-105 transition-transform ease-in-out flex justify-center items-center text-white bg-accent dark:bg-gradient-mid-color/40 text-xl sm:text-5xl h-10 w-10 sm:h-20 sm:w-20 rounded-[50%] font-extrabold mr-3 sm:mr-8">
               {user.name[0].toUpperCase()}
             </div>
             <div>
-              <h5 className="text-3xl font-semibold">{user.name}</h5>
-              <p className="text-md pt-2 pl-1 dark:text-text-secondary">{user.sub}</p>
+              <h5 className="text-lg sm:text-2xl font-semibold">{user.name}</h5>
+              <p className="text-xs sm:text-[16px] pt-1 sm:pt-2 pl-1 dark:text-text-secondary">{user?.email}</p>
             </div>
           </div>
           <button onClick={() => setSideBarOpen(false)} className="text-3xl lg:hidden">
@@ -163,227 +189,128 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
         <div className="flex flex-col justify-between flex-grow">
           <div>
             <form>
-              <div className="flex text-xl flex-col gap-6 p-8">
+              <div className="flex sm:text-lg flex-col gap-5 p-5">
                 <div className="flex justify-between items-center ">
-                  <h5 className="text-3xl font-semibold py-5">Filter</h5>
-                  <div className="flex flex-col gap-5 justify-between items-end">
+                  <h5 className="text-xl sm:text-3xl font-semibold sm:py-5">Filter</h5>
+                  <div className="flex flex-row gap-5 justify-between items-end">
                     <button
                       onClick={(e) => {
                         handleClear(e), navigate("");
                       }}
                       type="button"
-                      className="flex w-fit  flex-row justify-center items-end bg-background border-1 border-sidebar-border dark:bg-gradient-mid-color dark:border-border-color rounded-2xl text-sm text-dark-gray dark:text-white p-2 h-full hover:scale-110 transition-transform duration-300 ease-in-out "
+                      className="btn-dash"
                     >
-                      <RotateCcw className="w-5 h-5 mr-2" /> Clear
+                      <RotateCcw className="btn-dash-icon" /> Clear
                     </button>
                     <button
                       onClick={(e) => {
                         handleSearch(e), navigate("");
                       }}
                       type="submit"
-                      className="flex flex-row justify-center items-center bg-background border-1 border-sidebar-border dark:bg-gradient-mid-color dark:border-border-color rounded-2xl text-sm text-dark-gray dark:text-white p-2 h-full hover:scale-110 transition-transform duration-300 ease-in-out "
+                      className="btn-dash"
                     >
-                      <Search className="w-5 h-5 mr-2" /> {buttonText}
+                      <Search className="btn-dash-icon" /> {buttonText}
                     </button>
                   </div>
                 </div>
 
-                <div className="flex flex-col  sm:flex-row justify-between sm:items-center ">
-                  <label className="font-semibold">Title</label>
-                  <input
+                <div className="dash-comp-div ">
+                  <label className="text-lg">Title</label>
+                  <input 
                     type="text"
                     name="title"
-                    className="flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border rounded-2xl max-w-[60%] caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    className="dash-inp" 
+                    value={taskFilter.title} 
+                    onChange={(e) => updateTaskFilter({ title: e.target.value })} 
                   />
                 </div>
-
-                <div className="flex flex-col  sm:flex-row justify-between sm:items-center ">
-                  <label className="font-semibold">Description</label>
+                <div className="dash-comp-div">
+                  <label className="text-lg">Description</label>
                   <input
                     type="text"
-                    name="title"
-                    className="flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border rounded-2xl max-w-[60%] caret-sidebar-border dark:caret-gradient-mid-color  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
-                    value={description}
-                    onChange={(e) => {
-                      setDescription(e.target.value);
-                      console.log(description);
-                    }}
+                    name="description"
+                    className="dash-inp"
+                    value={taskFilter.description}
+                    onChange={(e) => updateTaskFilter({ description: e.target.value })}
                   />
                 </div>
                 {/* status */}
-                <div className="flex flex-col  sm:flex-row justify-between sm:items-center ">
-                  <p className="font-semibold">Status</p>
-                  <div className=" grid  sm:grid-rows-2 grid-cols-2 gap-y-2 sm:gap-y-5 sm:w-[60%] justify-start sm:justify-center select-none">
-                    <div className="flex justify-center items-center">
-                      <input
-                        type="radio"
-                        id="completed"
-                        name="status"
-                        value="completed"
-                        className="hidden peer"
-                        checked={status == "completed"}
-                        onChange={(e) => {
-                          setStatus(e.target.value);
-                        }}
-                      />
-                      <label htmlFor="completed" className="status-completed">
-                        Completed
-                      </label>
-                    </div>
-
-                    <div className="flex justify-center items-center">
-                      <input
-                        type="radio"
-                        id="notStarted"
-                        name="status"
-                        value="not started"
-                        className="hidden peer"
-                        checked={status == "not started"}
-                        onChange={(e) => {
-                          setStatus(e.target.value);
-                        }}
-                      />
-                      <label htmlFor="notStarted" className="status-not-started">
-                        Not started
-                      </label>
-                    </div>
-
-                    <div className="flex justify-center items-center">
-                      <input
-                        type="radio"
-                        id="inProgress"
-                        name="status"
-                        value="in progress"
-                        className="hidden peer"
-                        checked={status == "in progress"}
-                        onChange={(e) => {
-                          setStatus(e.target.value);
-                        }}
-                      />
-                      <label htmlFor="inProgress" className="status-in-progress">
-                        In Progress
-                      </label>
-                    </div>
-
-                    <div className="flex justify-center items-center">
-                      <input
-                        type="radio"
-                        id="all"
-                        name="status"
-                        value=""
-                        className="hidden peer"
-                        checked={status == ""}
-                        onChange={(e) => {
-                          setStatus(e.target.value);
-                        }}
-                      />
-                      <label htmlFor="all" className="status-all">
-                        All
-                      </label>
-                    </div>
+                <div className="dash-comp-div">
+                  <p className="text-lg">Status</p>
+                  <div className="dash-grid ">
+                    {statusArr[0].map((item, i) => (
+                      <div key={i} className="flex justify-center items-center">
+                        <input
+                          type="radio"
+                          id={statusArr[3][i]}
+                          name="status"
+                          value={statusArr[1][i]}
+                          className="hidden peer"
+                          checked={taskFilter.status == statusArr[1][i]}
+                          onChange={() => {
+                            updateTaskFilter({ status: statusArr[1][i] });
+                          }}
+                        />
+                        <label htmlFor={statusArr[3][i]} className={statusArr[3][i]}>
+                          {statusArr[2][i]}
+                        </label>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 {/* priorities */}
-                <div className="flex flex-col  sm:flex-row justify-between sm:items-center ">
-                  <p className="font-semibold">Priority</p>
-                  <div className=" grid sm:grid-rows-2 grid-cols-2 gap-y-2 sm:gap-y-5 sm:w-[60%] justify-start sm:justify-center select-none">
-                    <div className="flex justify-center items-center">
-                      <input
-                        type="radio"
-                        id="high"
-                        name="priority"
-                        value="high"
-                        className="hidden peer"
-                        checked={priority == "high"}
-                        onChange={(e) => {
-                          setPriority(e.target.value);
-                        }}
-                      />
-                      <label htmlFor="high" className="priority-high">
-                        High
-                      </label>
-                    </div>
-
-                    <div className="flex justify-center items-center">
-                      <input
-                        type="radio"
-                        id="medium"
-                        name="priority"
-                        value="medium"
-                        className="hidden peer"
-                        checked={priority == "medium"}
-                        onChange={(e) => {
-                          setPriority(e.target.value);
-                        }}
-                      />
-                      <label htmlFor="medium" className="priority-medium">
-                        Medium
-                      </label>
-                    </div>
-
-                    <div className="flex justify-center items-center">
-                      <input
-                        type="radio"
-                        id="low"
-                        name="priority"
-                        value="low"
-                        className="hidden peer"
-                        checked={priority == "low"}
-                        onChange={(e) => {
-                          setPriority(e.target.value);
-                        }}
-                      />
-                      <label htmlFor="low" className="priority-low">
-                        Low
-                      </label>
-                    </div>
-
-                    <div className="flex justify-center items-center">
-                      <input
-                        type="radio"
-                        id="priorityAll"
-                        name="priority"
-                        value=""
-                        className="hidden peer"
-                        checked={priority == ""}
-                        onChange={(e) => {
-                          setPriority(e.target.value);
-                        }}
-                      />
-                      <label htmlFor="priorityAll" className="priority-all">
-                        All
-                      </label>
-                    </div>
+                <div className="dash-comp-div">
+                  <p className="text-lg">Priority</p>
+                  <div className="dash-grid">
+                    {priorityArr[0].map((item, i) => (
+                      <div key={i} className="flex justify-center items-center">
+                        <input
+                          type="radio"
+                          id={priorityArr[3][i]}
+                          name="priority"
+                          value={priorityArr[1][i]}
+                          className="hidden peer"
+                          checked={taskFilter.priority == priorityArr[1][i]}
+                          onChange={() => {
+                            updateTaskFilter({ priority: priorityArr[1][i] });
+                          }}
+                        />
+                        <label htmlFor={priorityArr[3][i]} className={priorityArr[3][i]}>
+                          {priorityArr[2][i]}
+                        </label>
+                      </div>
+                    ))}
                   </div>
                 </div>
+                {/*  */}
 
                 {/* overdue */}
                 <div className="flex-1 flex-row justify-between sm:items-center cursor-pointer selection:none">
-                  <div className="rounded-2xl grid grid-cols-3 text-sm md:text-md border-1 border-sidebar-border dark:border-border-color justify-center items-center ">
+                  <div className="rounded-xl grid grid-cols-3 text-xs sm:text-sm border-1 border-sidebar-border dark:border-border-color justify-center items-center ">
                     <div
-                      onClick={() => setIncludeOverdue("true")}
+                      onClick={() => updateTaskFilter({ includeOverdue: "true" })}
                       className={`${
-                        includeOverdue == "true" ? "bg-accent dark:bg-gradient-mid-color shadow-md p-2 m-1.5 rounded-xl text-white" : ""
+                        taskFilter.includeOverdue == "true" ? "bg-accent/70 dark:bg-gradient-mid-color shadow-md p-2 m-1.5 rounded-xl text-white" : ""
                       } flex flex-col items-center`}
                     >
                       {" "}
                       <span>Overdue</span> <span>Only </span>
                     </div>
                     <div
-                      onClick={() => setIncludeOverdue("false")}
+                      onClick={() => updateTaskFilter({ includeOverdue: "false" })}
                       className={`${
-                        includeOverdue == "false" ? "bg-accent dark:bg-gradient-mid-color shadow-md p-2 m-1.5 rounded-xl text-white" : ""
+                        taskFilter.includeOverdue == "false"
+                          ? "bg-accent/70 dark:bg-gradient-mid-color shadow-md p-2 m-1.5 rounded-xl text-white text-xs sm:text-sm"
+                          : ""
                       } flex flex-col items-center`}
                     >
                       {" "}
                       <span>Upcoming</span> <span>Only </span>
                     </div>
                     <div
-                      onClick={() => setIncludeOverdue("")}
+                      onClick={() => updateTaskFilter({ includeOverdue: "" })}
                       className={`${
-                        includeOverdue == "" ? "bg-accent/70 dark:bg-gradient-mid-color/70 shadow-md p-2 m-1.5 rounded-xl text-white" : ""
+                        taskFilter.includeOverdue == "" ? "bg-accent/70 dark:bg-gradient-mid-color/40 shadow-md p-2 m-1.5 rounded-xl text-white" : ""
                       } flex flex-col items-center`}
                     >
                       {" "}
@@ -394,15 +321,19 @@ function UserSidebar({ sideBarOpen, setSideBarOpen, user }) {
 
                 {/* hide completed */}
                 <div className="flex-1 flex-row justify-between sm:items-center selection:none cursor-pointer">
-                  <div className="rounded-xl flex text-sm md:text-sm   justify-center items-center ">
+                  <div className="rounded-xl flex text-xs sm:text-sm   justify-center items-center ">
                     <div
-                      onClick={() => (excludeCompleted == "" ? setExcludeCompleted("true") : setExcludeCompleted(""))}
-                      className={`${
-                        excludeCompleted == "true" ? "" : "bg-accent dark:bg-gradient-mid-color text-white"
-                      } border-sidebar-border dark:border-border-color border-1 py-2 px-3 rounded-2xl flex flex-col items-center`}
+                      onClick={() =>
+                        taskFilter.excludeCompleted == "" ? updateTaskFilter({ excludeCompleted: "true" }) : updateTaskFilter({ excludeCompleted: "" })
+                      }
+                      className={`py-2 px-3  ${
+                        taskFilter.excludeCompleted == "true"
+                          ? "border-sidebar-border dark:border-border-color  border-1 "
+                          : "bg-accent/70 dark:bg-gradient-mid-color/40  text-white"
+                      } rounded-xl flex flex-col items-center`}
                     >
                       {" "}
-                      <span>{excludeCompleted == "true" ? <span> Hiding Completed Tasks </span> : <span> Showing Completed Tasks </span>}</span>{" "}
+                      <span>{taskFilter.excludeCompleted == "true" ? <span> Hiding Completed Tasks </span> : <span> Showing Completed Tasks </span>}</span>{" "}
                     </div>
                   </div>
                 </div>
