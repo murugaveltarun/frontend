@@ -23,13 +23,13 @@ function AllUsers() {
     <>
       {users.length > 0 && (
         <div className="table-container">
-          <div className="flex flex-row justify-between">
-            <div>
-              <label className="font-semibold">Limit Per Page</label>
+          <div className="flex flex-row justify-between text-xs sm:text-sm">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
+              <label className="font-semibold">Limit Per Page : </label>
               <input
                 type="number"
                 name="limit"
-                className="sort-bubble ml-0"
+                className="sort-bubble ml-0 w-full"
                 value={page.limit}
                 onChange={(e) =>{
                   let num = Number(e.target.value);
@@ -43,10 +43,10 @@ function AllUsers() {
               
             </div>
             <div>
-              <div className="flex flex-row justify-center gap-2 items-center">
-                <div>
+              <div className="flex flex-row justify-center sm:gap-2 items-center">
+                <div className="flex flex-col sm:flex-row justify-center items-center gap-2" >
                   <label htmlFor="sort">Sort By : </label>
-                  <select className="sort-bubble ml-0" onChange={(e) => updatePage({ sortBy: e.target.value })} value={page.sortBy} id="sort">
+                  <select className="sort-bubble ml-0 w-full" onChange={(e) => updatePage({ sortBy: e.target.value })} value={page.sortBy} id="sort">
                     {sortParams.map((item, i) => (
                       <option key={i} value={item}>
                         {sortName[i]}
@@ -54,9 +54,9 @@ function AllUsers() {
                     ))}
                   </select>
                 </div>
-                <div>
+                <div className="flex flex-col sm:flex-row justify-center items-center gap-2" >
                   <label htmlFor="sort-direction">Sort Direction : </label>
-                  <select className="sort-bubble ml-0" onChange={(e) => updatePage({ direction: e.target.value })} value={page.direction} id="sort-direction">
+                  <select className="sort-bubble ml-0 w-full" onChange={(e) => updatePage({ direction: e.target.value })} value={page.direction} id="sort-direction">
                     <option value={"desc"}>Descending ↑</option>
                     <option value={"asc"}>Ascending ↓</option>
                   </select>
@@ -64,7 +64,7 @@ function AllUsers() {
               </div>
             </div>
           </div>
-          <table className="table-class">
+          <table className="table-class text-xs sm:text-sm lg:text-base">
             <thead className="rounded-t-2xl ">
               <tr className="rounded-t-2xl ">
                 <th className="w-12 rounded-tl-xl table-heading">User ID</th>

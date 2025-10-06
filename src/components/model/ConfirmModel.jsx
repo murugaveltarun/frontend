@@ -2,7 +2,7 @@ import React from "react";
 
 function ConfirmModel({ message, message2, handleYes, setConfirm, text }) {
   return (
-    <div className="z-100 bg-gray-800/50 absolute w-full h-screen left-0 top-0">
+    <div className="z-2000 bg-gray-800/50 absolute w-full h-screen left-0 top-0">
       <div className="bg-text-primary dark:bg-bg-primary top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 shadow-2xl rounded-2xl border-accent dark:border-gradient-mid-color absolute">
         <div className=" flex flex-col m-8 gap-8 sm:w-md">
           <div>

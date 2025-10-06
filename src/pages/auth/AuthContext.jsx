@@ -8,7 +8,12 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState("");
   const [role, setRole] = useState("");
   const [tasks, setTasks] = useState([]);
-  const [users, setUsers] = useState([]);
+
+  const [responsePage, setResponsePage] = useState({
+    totalPages: 0,
+    currentPage: 0,
+    totalItems: 0,
+  });
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -38,5 +43,21 @@ export function AuthProvider({ children }) {
     setRole(null);
   };
 
-  return <AuthContext.Provider value={{ token, role, login, logout, tasks, setTasks, setToken, users, setUsers }}>{children}</AuthContext.Provider>;
+  const [page, setPage] = useState({
+    pageNo: 1,
+    limit: 14,
+    sortBy: "lastModifiedAt",
+    direction: "asc",
+  });
+
+  function updatePage(newUpdate) {
+    setPage((prev) => ({ ...prev, ...newUpdate }));
+  }
+  function updateResponsePage(newUpdate) {
+    setResponsePage((prev) => ({ ...prev, ...newUpdate }));
+  }
+
+  return (
+    <AuthContext.Provider value={{ token, role, login, logout, tasks, setTasks, setToken, page, setPage, responsePage, updatePage, updateResponsePage }}>{children}</AuthContext.Provider>
+  );
 }

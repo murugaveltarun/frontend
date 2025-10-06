@@ -44,21 +44,28 @@ function User() {
   }, [userid, token]);
 
   return (
-    <div>
-      {user != null && (
-        <div>
-          <p>{user.id}</p>
-          <p>{user.name}</p>
-          <p>{user.username}</p>
-          <p>{user.email}</p>
-          <p>{user.authProvider}</p>
-          <p>{user.providerId}</p>
-          <p>{user.createdAt}</p>
-          <p>{user.lastLoginAt}</p>
-          <p>{user.active}</p>
+    <div className="">
+      {user ? (
+        <div className="space-y-2">
+          <p><strong>ID:</strong> {user.id}</p>
+          <p><strong>Name:</strong> {user.name}</p>
+          <p><strong>Username:</strong> {user.username}</p>
+          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>Auth Provider:</strong> {user.authProvider}</p>
+          <p><strong>Provider ID:</strong> {user.providerId}</p>
+          <p><strong>Created At:</strong> {user.createdAt ?? "Not available"}</p>
+          <p><strong>Last Login:</strong> {user.lastLoginAt ?? "Not available"}</p>
+          <p><strong>Active:</strong> {user.active ? "Yes" : "No"}</p>
 
-          <button onClick={()=>navigate("/admin-dashboard/users/"+userid+"/tasks")}>User's Tasks</button>
+          <button
+            onClick={() => navigate("/admin-dashboard/users/" + userid + "/tasks")}
+            className="btn-primary-dashboard duration-300"
+          >
+            User's Tasks
+          </button>
         </div>
+      ) : (
+        <p>Loading user details...</p>
       )}
     </div>
   );

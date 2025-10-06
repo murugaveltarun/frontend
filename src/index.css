@@ -113,12 +113,14 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   @apply bg-bg-primary text-white border-gradient-mid-color;
 }
 
-
-
 /* dashboard tags */
 
 @utility dash-tag-common {
   @apply w-full text-center text-xs sm:text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:text-white peer-checked:border-none;
+}
+
+@utility auth-provider {
+  @apply w-full text-center text-xs sm:text-sm px-4 py-2 rounded-xl border border-sidebar-border dark:border-border-color cursor-pointer peer-checked:border-accent dark:peer-checked:border-gradient-mid-color peer-checked:border-3 peer-checked:bg-transparent;
 }
 
 @utility status-completed {
@@ -126,11 +128,11 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 
 @utility status-not-started {
-  @apply  dash-tag-common peer-checked:bg-status-not-started;
+  @apply dash-tag-common peer-checked:bg-status-not-started;
 }
 
 @utility status-in-progress {
-  @apply  dash-tag-common peer-checked:bg-status-in-progress;
+  @apply dash-tag-common peer-checked:bg-status-in-progress;
 }
 
 @utility status-all {
@@ -138,21 +140,20 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 
 @utility priority-high {
-  @apply  dash-tag-common peer-checked:bg-priority-high;
+  @apply dash-tag-common peer-checked:bg-priority-high;
 }
 
 @utility priority-medium {
-  @apply  dash-tag-common peer-checked:bg-priority-medium;
-} 
+  @apply dash-tag-common peer-checked:bg-priority-medium;
+}
 
 @utility priority-low {
-  @apply  dash-tag-common peer-checked:bg-priority-low;
+  @apply dash-tag-common peer-checked:bg-priority-low;
 }
 
 @utility priority-all {
-  @apply dash-tag-common peer-checked:bg-accent/70 dark:peer-checked:bg-gradient-mid-color/40 ;
+  @apply dash-tag-common peer-checked:bg-accent/70 dark:peer-checked:bg-gradient-mid-color/40;
 }
-
 
 /* task page tags */
 
@@ -161,7 +162,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 
 @utility priority-high-tag {
-  @apply task-tag-common bg-priority-high ;
+  @apply task-tag-common bg-priority-high;
 }
 
 @utility priority-medium-tag {
@@ -172,13 +173,11 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   @apply task-tag-common bg-priority-low;
 }
 
-
 /* gradient card */
 
 @utility gradient-card {
   @apply dark:bg-gradient-to-tl dark:from-neutral-50/10 dark:to-gradient-mid-color/5;
 }
-
 
 /* theme buttons */
 
@@ -199,7 +198,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 /* logout button */
 
 @utility red-button {
-  @apply flex flex-row justify-center items-center rounded-lg border border-red-500 px-6 py-2 m-6   ease-in-out hover:scale-105 bg-red-500 text-white;
+  @apply flex flex-row justify-center items-center rounded-lg border border-red-500 px-6 py-2 m-6 text-sm sm:text-base  ease-in-out hover:scale-105 text-red-500;
 }
 
 /* sorting selection tag  */
@@ -234,7 +233,6 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   @apply hover:underline cursor-pointer;
 }
 
-
 /* dashboard */
 
 @utility dash-inp {
@@ -250,35 +248,48 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 
 @utility dash-comp-div {
-  @apply flex flex-row justify-between items-center 
+  @apply flex flex-row justify-between items-center;
 }
 
 @utility dash-grid {
   @apply grid sm:grid-rows-2 grid-cols-2 gap-2 sm:gap-5 w-[75%] sm:w-[70%] justify-start sm:justify-center select-none;
 }
 
-
-@utility add-task-comp{
-  @apply grid md:grid-cols-[150px_1fr] lg:grid-cols-[110px_1fr] items-center gap-1.5 md:gap-5
+@utility add-task-comp {
+  @apply grid md:grid-cols-[150px_1fr] lg:grid-cols-[110px_1fr] items-center gap-1.5 md:gap-5;
 }
 
 /* view task  */
 
 @utility back-button {
-  @apply btn-secondary-dashboard w-min h-full p-2 text-xs sm:text-base
+  @apply btn-secondary-dashboard w-min h-full p-2 text-xs sm:text-base;
 }
 
 @utility edit-button {
-  @apply btn-secondary-dashboard w-min p-2  text-xs sm:text-base
+  @apply btn-secondary-dashboard w-min p-2  text-xs sm:text-base;
 }
 
 @utility trash-button {
-  @apply sm:w-12 sm:h-12 flex gap-2 justify-center items-center btn-secondary-dashboard p-2 text-xs sm:text-base
+  @apply sm:w-12 sm:h-12 flex gap-2 justify-center items-center btn-secondary-dashboard p-2 text-xs sm:text-base;
 }
-@utility view-task-priority{
-  @apply flex flex-col items-center select-none text-2xl font-bold w-20 h-min
+@utility view-task-priority {
+  @apply flex flex-col items-center select-none text-2xl font-bold w-20 h-min;
 }
 
-@utility save-button{
-  @apply btn-primary-dashboard w-min p-2  text-xs sm:text-base
+@utility save-button {
+  @apply btn-primary-dashboard w-min p-2  text-xs sm:text-base;
+}
+
+/* navbar  */
+
+@utility active-link{
+  @apply font-extrabold rounded-full border-2 border-accent dark:border-gradient-mid-color 
+}
+
+@utility old-nav {
+  @apply flex justify-center items-center py-2.5 sm:py-4 bg-dark-accent/10 w-fit px-10 rounded-full border-1 border-accent dark:border-gradient-mid-color text-accent dark:bg-dark-purple dark:text-white mb-4 md:mb-0
+}
+
+@utility new-nav {
+  @apply flex justify-center items-center w-fit mb-4 md:mb-0 rounded-full p-3 bg-dark-accent/30 dark:bg-dark-purple
 }

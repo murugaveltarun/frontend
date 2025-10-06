@@ -10,18 +10,13 @@ import { UsersContext } from "../context/UsersContext";
 function AdminUsersSidebar() {
   const navigate = useNavigate();
   let { token, setToken } = useContext(AuthContext);
-  let { setUsers, page, updatePage, updateResponsePage } = useContext(UsersContext);
-
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [authProvider, setAuthProvider] = useState("");
-  const [name, setName] = useState("");
-  const [id, setId] = useState("");
-  const [active, setActive] = useState("");
+  let { setUsers, page, updatePage, updateResponsePage, updateUserFilter, userFilter } = useContext(UsersContext);
+  const [id, setId] = useState();
   const [buttonText, setButtonText] = useState("Search");
   const [buttonText2, setButtonText2] = useState("Search");
   const [idError, setIdError] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+
 
   useEffect(() => {
     handleClear();
@@ -71,20 +66,18 @@ function AdminUsersSidebar() {
   };
 
   const handleSearch = async (e) => {
-    setIsSearching(true)
+    setIsSearching(true);
     e?.preventDefault();
-    if (!username && !email && !authProvider && !name && !active) {
+    if (!userFilter.username && !userFilter.email && !userFilter.authProvider && !userFilter.uname && !userFilter.active) {
       handleClear();
       return;
     }
 
     setButtonText("Searching...");
     try {
-      const url = `${
-        import.meta.env.VITE_BACKEND_URL
-      }/users/search?username=${username}&email=${email}&authProvider=${authProvider}&name=${name}&active=${active}&page=${page.pageNo}&limit=${
-        page.limit
-      }&sortBy=${page.sortBy}&direction=${page.direction}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/users/search?username=${userFilter.username}&email=${userFilter.email}&authProvider=${
+        userFilter.authProvider
+      }&name=${userFilter.uname}&active=${userFilter.active}&page=${page.pageNo}&limit=${page.limit}&sortBy=${page.sortBy}&direction=${page.direction}`;
       console.log(url);
       const validToken = await checkTokenOrRefresh(token, navigate);
       if (!validToken) return;
@@ -93,14 +86,14 @@ function AdminUsersSidebar() {
       const response = await getApi(validToken).get(url);
       if (response.data.status == 200) {
         setUsers(response.data.data.users);
-        updateResponsePage({totalPage:response.data.data.totalPages, currentPage:response.data.data.currentPage,totalItems:response.data.data.totalItems})
+        updateResponsePage({
+          totalPage: response.data.data.totalPages,
+          currentPage: response.data.data.currentPage,
+          totalItems: response.data.data.totalItems,
+        });
         console.log(page);
       }
     } catch (e) {
-      console.log(e.status);
-      if (e.request) {
-        toast.error("Error while fetching users. Please try again later.");
-      }
       console.log(e);
     }
     setButtonText("Search");
@@ -109,13 +102,15 @@ function AdminUsersSidebar() {
 
   // for clearing filters and get all tasks
   const handleClear = async (e) => {
-    setIsSearching(false)
+    setIsSearching(false);
     e?.preventDefault();
-    setUsername("");
-    setEmail("");
-    setAuthProvider("");
-    setName("");
-    setActive("");
+    updateUserFilter({
+      username: "",
+      email: "",
+      authProvider: "",
+      uname: "",
+      active: "",
+    });
     try {
       const url = `${import.meta.env.VITE_BACKEND_URL}/users?page=${page.pageNo}&limit=${page.limit}&sortBy=${page.sortBy}&direction=${page.direction}`;
 
@@ -130,14 +125,14 @@ function AdminUsersSidebar() {
       console.log(response);
       if (response.data.status == 200) {
         setUsers(response.data.data.users);
-        updateResponsePage({totalPage:response.data.data.totalPages, currentPage:response.data.data.currentPage,totalItems:response.data.data.totalItems})
+        updateResponsePage({
+          totalPage: response.data.data.totalPages,
+          currentPage: response.data.data.currentPage,
+          totalItems: response.data.data.totalItems,
+        });
         console.log(page);
       }
     } catch (e) {
-      console.log(e.status);
-      if (e.request) {
-        toast.error("Error while fetching task. Please try again later.");
-      }
       console.error(e);
     }
   };
@@ -147,12 +142,12 @@ function AdminUsersSidebar() {
       <div className="flex text-xl flex-col border-b-1 border-sidebar-border dark:border-border-color">
         <form>
           <div className="p-5">
-            <div className="flex flex-col  sm:flex-row justify-between sm:items-center ">
-              <label className="font-semibold">Find by ID : </label>
+            <div className="flex flex-row justify-between items-center gap-3 ">
+              <label className="text-lg">Find by ID : </label>
               <input
                 type="number"
                 name="id"
-                className="flex w-25 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border rounded-2xl max-w-[60%] caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
+                className="dash-inp max-w-20"
                 value={id}
                 onChange={(e) => setId(e.target.value)}
               />
@@ -161,10 +156,10 @@ function AdminUsersSidebar() {
                   findUserById(e);
                 }}
                 type="submit"
-                className="flex flex-row justify-center items-center bg-background border-1 border-sidebar-border dark:bg-gradient-mid-color dark:border-border-color rounded-2xl text-sm text-dark-gray dark:text-white p-2 h-full hover:scale-110 transition-transform duration-300 ease-in-out "
+                className="btn-dash "
               >
                 {" "}
-                <Search className="w-5 h-5 mr-2" /> {buttonText2}
+                <Search className="w-5 h-5 mr-2" /> <p className="hidden sm:block">{buttonText2}</p>
               </button>
             </div>
             {idError && <p className="text-red-500 text-sm">{idError}</p>}
@@ -175,70 +170,70 @@ function AdminUsersSidebar() {
         <form>
           <div className="flex text-xl flex-col gap-6 p-5">
             <div className="flex justify-between items-center ">
-              <h5 className="text-xl font-semibold py-5">Filter users : </h5>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <h5 className="tex-lg">Filter users : </h5>
+              <div className="flex flex-row gap-4">
                 <button
                   onClick={(e) => {
                     e.preventDefault();
-                    updatePage({pageNo : 1});
-                    setIsSearching(false)
+                    updatePage({ pageNo: 1 });
+                    setIsSearching(false);
                   }}
                   type="button"
-                  className="flex w-fit  flex-row justify-center items-end bg-background border-1 border-sidebar-border dark:bg-gradient-mid-color dark:border-border-color rounded-2xl text-sm text-dark-gray dark:text-white p-2 h-full hover:scale-110 transition-transform duration-300 ease-in-out "
+                  className="btn-dash"
                 >
-                  <RotateCcw className="w-5 h-5 mr-2" /> Clear
+                  <RotateCcw className="btn-dash-icon" /> Clear
                 </button>
                 <button
                   onClick={(e) => {
                     e.preventDefault();
-                    updatePage({pageNo : 1});
-                    setIsSearching(true)
+                    updatePage({ pageNo: 1 });
+                    setIsSearching(true);
                   }}
                   type="submit"
-                  className="flex flex-row justify-center items-center bg-background border-1 border-sidebar-border dark:bg-gradient-mid-color dark:border-border-color rounded-2xl text-sm text-dark-gray dark:text-white p-2 h-full hover:scale-110 transition-transform duration-300 ease-in-out "
+                  className="btn-dash"
                 >
                   {" "}
-                  <Search className="w-5 h-5 mr-2" /> {buttonText}
+                  <Search className="btn-dash-icon" /> {buttonText}
                 </button>
               </div>
             </div>
 
-            <div className="flex flex-col  sm:flex-row justify-between sm:items-center ">
-              <label className="font-semibold">Username</label>
+            <div className="dash-comp-div">
+              <label className="text-lg">Username</label>
               <input
                 type="text"
                 name="username"
-                className="flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border rounded-2xl max-w-[60%] caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                className="dash-inp"
+                value={userFilter.username}
+                onChange={(e) => updateUserFilter({ username: e.target.value })}
               />
             </div>
 
-            <div className="flex flex-col  sm:flex-row justify-between sm:items-center ">
-              <label className="font-semibold">E-Mail</label>
+            <div className="dash-comp-div">
+              <label className="text-lg">E-Mail</label>
               <input
                 type="text"
                 name="email"
-                className="flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border rounded-2xl max-w-[60%] caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                className="dash-inp"
+                value={userFilter.email}
+                onChange={(e) => updateUserFilter({ email: e.target.value })}
               />
             </div>
 
-            <div className="flex flex-col  sm:flex-row justify-between sm:items-center ">
-              <label className="font-semibold">Name</label>
+            <div className="dash-comp-div">
+              <label className="text-lg">Name</label>
               <input
                 type="text"
                 name="name"
-                className="flex-1 bg-white dark:bg-bg-surface sm:ml-5 p-2 border border-sidebar-border rounded-2xl max-w-[60%] caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                className="dash-inp"
+                value={userFilter.uname}
+                onChange={(e) => updateUserFilter({ uname: e.target.value })}
               />
             </div>
-            {/* status */}
-            <div className="flex flex-col  sm:flex-row justify-between sm:items-center ">
-              <p className="font-semibold">Auth Provider</p>
-              <div className=" grid  sm:grid-rows-2 grid-cols-2 gap-y-2 sm:gap-y-5 sm:w-[60%] justify-start sm:justify-center select-none">
+            {/* auth Provider */}
+            <div className="dash-comp-div">
+              <p className="text-lg">Auth Provider</p>
+              <div className="dash-grid">
                 <div className="flex justify-center items-center">
                   <input
                     type="radio"
@@ -246,13 +241,15 @@ function AdminUsersSidebar() {
                     name="status"
                     value="google"
                     className="hidden peer"
-                    checked={authProvider == "google"}
+                    checked={userFilter.authProvider == "google"}
                     onChange={(e) => {
-                      setAuthProvider(e.target.value);
+                      updateUserFilter({ authProvider: e.target.value });
                     }}
                   />
-                  <label htmlFor="google" className="status-completed w-full">
-                    Google
+                  <label htmlFor="google" className="auth-provider ">
+                    <div className="flex flex-row gap-2 justify-center items-center">
+                      <img src="/google.png" alt="a" className="h-5" /> Google
+                    </div>
                   </label>
                 </div>
 
@@ -263,13 +260,15 @@ function AdminUsersSidebar() {
                     name="authProvider"
                     value="github"
                     className="hidden peer"
-                    checked={authProvider == "github"}
+                    checked={userFilter.authProvider == "github"}
                     onChange={(e) => {
-                      setAuthProvider(e.target.value);
+                      updateUserFilter({ authProvider: e.target.value });
                     }}
                   />
-                  <label htmlFor="github" className="status-completed">
-                    GitHub
+                  <label htmlFor="github" className="auth-provider">
+                    <div className="flex flex-row gap-2 justify-center items-center">
+                      <img src="/github.png" alt="a" className="btn-dash-icon" /> GitHub
+                    </div>
                   </label>
                 </div>
                 <div className="flex justify-center items-center">
@@ -279,13 +278,15 @@ function AdminUsersSidebar() {
                     name="authProvider"
                     value="local"
                     className="hidden peer"
-                    checked={authProvider == "local"}
+                    checked={userFilter.authProvider == "local"}
                     onChange={(e) => {
-                      setAuthProvider(e.target.value);
+                      updateUserFilter({ authProvider: e.target.value });
                     }}
                   />
-                  <label htmlFor="local" className="status-completed">
-                    Local
+                  <label htmlFor="local" className="auth-provider">
+                    <div className="flex flex-row gap-2 justify-center items-center">
+                      <img src="/icon.png" alt="a" className="h-5" /> Local
+                    </div>
                   </label>
                 </div>
                 <div className="flex justify-center items-center">
@@ -295,43 +296,43 @@ function AdminUsersSidebar() {
                     name="authProvider"
                     value=""
                     className="hidden peer"
-                    checked={authProvider == ""}
+                    checked={userFilter.authProvider == ""}
                     onChange={(e) => {
-                      setAuthProvider(e.target.value);
+                      updateUserFilter({ authProvider: e.target.value });
                     }}
                   />
-                  <label htmlFor="all" className="status-completed">
+                  <label htmlFor="all" className="auth-provider">
                     All
                   </label>
                 </div>
               </div>
             </div>
 
-            {/* overdue */}
+            {/* active */}
             <div className="flex-1 flex-row justify-between sm:items-center cursor-pointer selection:none">
-              <div className="rounded-2xl grid grid-cols-3 text-sm md:text-md border-1 border-sidebar-border dark:border-border-color justify-center items-center ">
+              <div className="rounded-2xl grid grid-cols-3 text-xs md:text-sm border-1 border-sidebar-border dark:border-border-color justify-center items-center ">
                 <div
-                  onClick={() => setActive("true")}
+                  onClick={() => updateUserFilter({ active: "true" })}
                   className={`${
-                    active == "true" ? "bg-accent dark:bg-gradient-mid-color shadow-md p-2 m-1.5 rounded-xl text-white" : ""
+                    userFilter.active == "true" ? "bg-accent dark:bg-gradient-mid-color shadow-md p-2 m-1.5 rounded-xl text-white" : ""
                   } flex flex-col items-center`}
                 >
                   {" "}
                   <span>Active</span> <span>Only </span>
                 </div>
                 <div
-                  onClick={() => setActive("false")}
+                  onClick={() => updateUserFilter({ active: "false" })}
                   className={`${
-                    active == "false" ? "bg-accent dark:bg-gradient-mid-color shadow-md p-2 m-1.5 rounded-xl text-white" : ""
+                    userFilter.active == "false" ? "bg-accent dark:bg-gradient-mid-color shadow-md p-2 m-1.5 rounded-xl text-white" : ""
                   } flex flex-col items-center`}
                 >
                   {" "}
                   <span>Disabled</span> <span>Only </span>
                 </div>
                 <div
-                  onClick={() => setActive("")}
+                  onClick={() => updateUserFilter({ active: "" })}
                   className={`${
-                    active == "" ? "bg-accent/70 dark:bg-gradient-mid-color/70 shadow-md p-2 m-1.5 rounded-xl text-white" : ""
+                    userFilter.active == "" ? "bg-accent/70 dark:bg-gradient-mid-color/70 shadow-md p-2 m-1.5 rounded-xl text-white" : ""
                   } flex flex-col items-center`}
                 >
                   {" "}

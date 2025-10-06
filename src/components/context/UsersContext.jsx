@@ -4,6 +4,13 @@ export const UsersContext = createContext();
 
 export function UsersProvider({ children }) {
   const [users, setUsers] = useState([]);
+  const [userFilter, setUserFilter] = useState({
+    username: "",
+    email: "",
+    uname: "",
+    authProvider: "",
+    active: "",
+  });
   const [page, setPage] = useState({
     pageNo: 1,
     limit: 14,
@@ -15,6 +22,9 @@ export function UsersProvider({ children }) {
     currentPage: 0,
     totalItems: 0,
   });
+  function updateUserFilter(newUpdate) {
+    setUserFilter((prev) => ({ ...prev, ...newUpdate }));
+  }
 
   function updatePage(newUpdate) {
     setPage((prev) => ({ ...prev, ...newUpdate }));
@@ -24,7 +34,9 @@ export function UsersProvider({ children }) {
   }
 
   return (
-    <UsersContext.Provider value={{ page, setPage, users, setUsers, updatePage, responsePage, setResponsePage, updateResponsePage }}>
+    <UsersContext.Provider
+      value={{ page, setPage, users, setUsers, updatePage, responsePage, setResponsePage, updateResponsePage, userFilter, setUserFilter, updateUserFilter }}
+    >
       {children}
     </UsersContext.Provider>
   );

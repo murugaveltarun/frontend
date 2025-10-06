@@ -45,7 +45,7 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
       console.log(e.status);
       if (e.status == 404 || e.status == 401) {
         toast.error("Error while saving task.");
-        navigate("/user-dashboard");
+        navigate(-1);
       }
       if (e.request) {
         toast.error("Error while saving task. Please try again later.");
@@ -77,7 +77,7 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
         console.log(e.status);
         if (e.status == 404 || e.status == 401) {
           toast.error("Task Not Found");
-          navigate("/user-dashboard");
+          navigate(-1);
         }
         if (e.request) {
           toast.error("Error while fetching task. Please try again later.");
@@ -97,37 +97,37 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
             <div className="flex justify-center items-center ">
               <div className="w-full bg-text-primary dark:border-gradient-mid-color dark:bg-neutral-50/10 ring-1 ring-accent dark:ring-gradient-mid-color dark:shadow-none  m-3 xl:m-10 shadow-xl p-4 rounded-2xl flex flex-col">
                 <form onSubmit={handleSubmitEdit}>
-                  <div className="flex gap-5 justify-between ">
+                  <div className="flex gap-5 justify-between h-min">
                     <div className="flex justify-start gap-5">
-                      <button className="btn-secondary-dashboard w-min h-full" onClick={() => navigate("/user-dashboard")}>
+                      <button className="back-button" onClick={() => navigate(-1)}>
                         {" "}
                         <div className="flex gap-2 justify-center items-center">
                           {" "}
-                          <ArrowLeft className="w-4 h-4" /> <span className="text-lg"> Back </span>{" "}
+                          <ArrowLeft className="sm:w-4 sm:h-4 w-3 h-3" /> <span className=""> Back </span>{" "}
                         </div>{" "}
                       </button>
                     </div>
                     <div className="flex justify-end gap-5">
-                      <button type="button" className="btn-secondary-dashboard w-min" onClick={handleIsEditing}>
+                      <button type="button" className="back-button" onClick={handleIsEditing}>
                         {" "}
                         <div className="flex gap-2 justify-center items-center">
                           {" "}
-                          <X className="w-4 h-4" /> <span className="text-lg"> Cancel </span>{" "}
+                          <X className="sm:w-4 sm:h-4 w-3 h-3" /> <span> Cancel </span>{" "}
                         </div>{" "}
                       </button>
-                      <button type="submit" className="btn-primary-dashboard w-min" onClick={handleSubmitEdit}>
+                      <button type="submit" className="save-button" onClick={handleSubmitEdit}>
                         {" "}
                         <div className="flex gap-2 justify-center items-center">
                           {" "}
-                          <Save className="w-4 h-4" /> <span className="text-lg"> Save </span>{" "}
+                          <Save className="sm:w-4 sm:h-4 w-3 h-3" /> <span> Save </span>{" "}
                         </div>{" "}
                       </button>
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-10">
+                  <div className="flex flex-col gap-4 md:gap-10">
                     {/* status bar */}
-                    <div className="flex flex-col gap-10 relative my-14 mx-10 md:mx-20">
+                    <div className="flex flex-col gap-10 relative my-10 sm:my-12 md:my-14 mx-10 md:mx-20">
                       <div className="flex flex-row">
                         {/* leftbar of status bar */}
                         <div
@@ -242,13 +242,13 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                     </div>
 
                     {/* left and right container */}
-                    <div className="grid grid-cols-1 2xl:grid-cols-[1fr_270px]  gap-10">
-                      <div className="flex flex-col gap-10 order-2 2xl:order-1 p-5 pl-8">
+                    <div className="grid grid-cols-1 2xl:grid-cols-[1fr_300px] gap-5 sm:gap-10">
+                      <div className="flex flex-col gap-5 md:gap-10 order-2 2xl:order-1 sm:p-5 pl-2 sm:pl-8">
                         <input
                           type="text"
                           onChange={(e) => setTitle(e.target.value)}
                           value={title}
-                          className=" text-3xl font-semibold  bg-white dark:bg-bg-surface  p-2 border border-sidebar-border dark:border-border-color rounded-2xl  caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color focus:outline-none"
+                          className=" text-2xl font-semibold  bg-white dark:bg-bg-surface  p-2 border border-sidebar-border rounded-2xl  caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
                         />
                         <div>
                           {dueDate && (
@@ -261,7 +261,7 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                                   max={new Date("2100-12-31").toISOString().substring(0, 16)}
                                   value={dueDate}
                                   id="dueDate"
-                                  className="w-full bg-white dark:bg-bg-surface  p-2 border border-sidebar-border dark:border-border-color rounded-2xl  caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color focus:outline-none"
+                                  className="w-full bg-white dark:bg-bg-surface  p-2 border border-sidebar-border rounded-2xl  caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
                                   onChange={(e) => setDueDate(e.target.value)}
                                 />
                                 <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 dark:text-white pointer-events-none" size={20} />
@@ -273,28 +273,28 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                           type="text"
                           onChange={(e) => setDescription(e.target.value)}
                           value={description}
-                          className=" min-h-60 text-lg overflow-y-auto  custom-scroll bg-white dark:bg-bg-surface  p-2 border border-sidebar-border dark:border-border-color rounded-2xl  caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color focus:outline-none"
+                          className=" min-h-60 text-lg overflow-y-auto  custom-scroll bg-white dark:bg-bg-surface  p-2 border border-sidebar-border dark:border-border-color rounded-2xl  caret-sidebar-border  dark:caret-gradient-mid-color dark:  focus:border-sidebar-border dark:focus:border-gradient-mid-color dark:border-border-color focus:outline-none"
                         />
                       </div>
-                      <div className="flex  flex-col md:flex-row flex-1 xl:flex-row 2xl:flex-col gap-10 order-1 2xl:order-2 p-5">
-                        <div className="w-full flex flex-col gap-4 border-1 border-text-secondary p-5 rounded-2xl">
+                      <div className="flex  flex-col md:flex-row flex-1 xl:flex-row 2xl:flex-col gap-7 sm:gap-10 order-1 2xl:order-2 p-1 sm:p-5 mt-4 md:mt-0">
+                        <div className="w-full justify-between items-left flex flex-col sm:gap-4 border-1 border-text-secondary p-3 px-4 sm:p-5 rounded-2xl">
                           <p className="flex items-center gap-2">
                             {" "}
                             <AlertTriangle className="w-4 h-4" /> Priority :{" "}
                           </p>
-                          <div className="py-5 ">
-                            <div className="flex flex-col gap-6 select-none">
+                          <div className="py-5">
+                            <div className="flex flex-row lg:flex-col xl:flex-row 2xl:flex-col gap-2 lg:gap-6 select-none">
                               <div>
                                 <input
                                   type="radio"
                                   name="priority"
                                   value="high"
                                   className="hidden peer"
-                                  id="priority-high"
+                                  id="priority-high-edit"
                                   onChange={(e) => setPriority(e.target.value)}
                                   checked={priority == "high"}
                                 />
-                                <label htmlFor="priority-high" className="priority-high text-xl">
+                                <label htmlFor="priority-high-edit" className="priority-high text-xs sm:text-base md:text-lg p-2">
                                   High
                                 </label>
                               </div>
@@ -304,11 +304,11 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                                   name="priority"
                                   value="medium"
                                   className="hidden peer"
-                                  id="priority-medium"
+                                  id="priority-medium-edit"
                                   onChange={(e) => setPriority(e.target.value)}
                                   checked={priority == "medium"}
                                 />
-                                <label htmlFor="priority-medium" className="priority-medium text-xl">
+                                <label htmlFor="priority-medium-edit" className="priority-medium text-xs sm:text-base md:text-lg p-2">
                                   Medium
                                 </label>
                               </div>
@@ -318,30 +318,30 @@ function EditTask({ isEditing, handleIsEditing, setIsEditing }) {
                                   name="priority"
                                   value="low"
                                   className="hidden peer"
-                                  id="priority-low"
+                                  id="priority-low-edit"
                                   onChange={(e) => setPriority(e.target.value)}
                                   checked={priority == "low"}
                                 />
-                                <label htmlFor="priority-low" className="priority-low text-xl">
+                                <label htmlFor="priority-low-edit" className="priority-low text-xs sm:text-base md:text-lg p-2">
                                   Low
                                 </label>
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div className=" w-full flex flex-col gap-4 border-1 border-text-secondary p-5 rounded-2xl">
+                        <div className=" w-full flex flex-col gap-4 border-1 border-text-secondary p-3 px-4 sm:p-5 rounded-2xl text-xs sm:text-sm">
                           {oldTask?.createdAt && (
-                            <div>
-                              <p className="flex gap-2 items-center">
+                            <div className="flex flex-row gap-x-2 gap-3">
+                              <p className="flex gap-2 items-center w-full">
                                 <Clock className="w-4 h-4" />
                                 <span className="">Created At :</span>
                               </p>
-                              <p className="italic font-bold">{format(new Date(oldTask.createdAt), "MMM dd, yyyy • hh:mm a")}</p>
+                              <p className="italic font-bold ">{format(new Date(oldTask.createdAt), "MMM dd, yyyy • hh:mm a")}</p>
                             </div>
                           )}
                           {oldTask?.lastModifiedAt && (
-                            <div>
-                              <p className="flex gap-2 items-center">
+                            <div className="flex flex-row gap-x-2 gap-3">
+                              <p className="flex gap-2 items-center w-full">
                                 <Clock className="w-4 h-4" />
                                 Last Modified At :
                               </p>

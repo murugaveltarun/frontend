@@ -11,7 +11,7 @@ import ConfirmModel from "../../../components/model/ConfirmModel";
 
 function ViewTask({ isEditing, handleIsEditing }) {
   const navigate = useNavigate();
-  const {userid, taskid } = useParams();
+  const { userid, taskid } = useParams();
   const { token, setToken } = useContext(AuthContext);
   const [task, setTask] = useState([]);
   const [confirm, setConfirm] = useState(false);
@@ -21,7 +21,6 @@ function ViewTask({ isEditing, handleIsEditing }) {
     e.preventDefault();
     if (!confirm) return;
     try {
-
       // check before whether the access token is valid or not
       const validToken = await checkTokenOrRefresh(token, navigate);
       if (!validToken) return;
@@ -32,43 +31,43 @@ function ViewTask({ isEditing, handleIsEditing }) {
       if (response.data.status == 200) {
         toast.success("Task Deleted Successfully.");
         console.log("deleted successfully");
-        navigate("/user-dashboard");
+        navigate(-1);
       }
     } catch (e) {
       console.log(e.status);
     }
   };
 
-    useEffect(() => {
-      const getTask = async () => {
-        try {
-          //check before whether the access token is valid or not
-          const validToken = await checkTokenOrRefresh(token, navigate);
-          if (!validToken) return;
-          setToken(validToken);
-  
-          //get a particular task by id
-          const response = await getApi(token).get("/users/" + userid + "/tasks/" + taskid);
-          console.log(response.data.data);
-          if (response.data.status == 200) {
-            setSuccess(true);
-            setTask(response.data.data);
-          }
-          console.log(task);
-          console.log(task.dueDate);
-        } catch (e) {
-          console.log(e.status);
-          if (e.status == 404 || e.status == 401) {
-            navigate("/user-dashboard");
-          }
-          if (e.request) {
-            console.log("Error while fetching task. Please try again later.");
-          }
-          console.log(e);
+  useEffect(() => {
+    const getTask = async () => {
+      try {
+        //check before whether the access token is valid or not
+        const validToken = await checkTokenOrRefresh(token, navigate);
+        if (!validToken) return;
+        setToken(validToken);
+
+        //get a particular task by id
+        const response = await getApi(token).get("/users/" + userid + "/tasks/" + taskid);
+        console.log(response.data.data);
+        if (response.data.status == 200) {
+          setSuccess(true);
+          setTask(response.data.data);
         }
-      };
-      getTask();
-    }, [token]);
+        console.log(task);
+        console.log(task.dueDate);
+      } catch (e) {
+        console.log(e.status);
+        if (e.status == 404 || e.status == 401) {
+          navigate(-1);
+        }
+        if (e.request) {
+          console.log("Error while fetching task. Please try again later.");
+        }
+        console.log(e);
+      }
+    };
+    getTask();
+  }, [token]);
 
   return (
     <>
@@ -86,27 +85,27 @@ function ViewTask({ isEditing, handleIsEditing }) {
           {!isEditing && (
             <div className="flex justify-center items-center ">
               <div className="w-full bg-text-primary dark:border-gradient-mid-color dark:bg-neutral-50/10 ring-1 ring-accent dark:ring-gradient-mid-color dark:shadow-none  m-3 xl:m-10 shadow-xl p-4 rounded-2xl flex flex-col">
-                <div className="flex justify-between gap-5">
+                <div className="flex justify-between gap-5 h-min">
                   <div className="flex justify-start gap-5">
-                    <button className="btn-secondary-dashboard w-min h-full" onClick={() => navigate("/user-dashboard")}>
+                    <button className="back-button" onClick={() => navigate(-1)}>
                       {" "}
                       <div className="flex gap-2 justify-center items-center">
                         {" "}
-                        <ArrowLeft className="w-4 h-4" /> <span className="text-lg"> Back </span>{" "}
+                        <ArrowLeft className="sm:w-4 sm:h-4 w-3 h-3" /> <span className=""> Back </span>{" "}
                       </div>{" "}
                     </button>
                   </div>
                   <div className="flex justify-end gap-5">
-                    <button className="btn-secondary-dashboard w-min" onClick={handleIsEditing}>
+                    <button className="edit-button" onClick={handleIsEditing}>
                       {" "}
                       <div className="flex gap-2 justify-center items-center ">
                         {" "}
-                        <Pencil className="w-4 h-4" /> <span className="text-lg"> Edit </span>{" "}
+                        <Pencil className="sm:w-4 sm:h-4 w-3 h-3" /> <span className=""> Edit </span>{" "}
                       </div>{" "}
                     </button>
-                    <button className="w-12 h-12 flex gap-2 justify-center items-center btn-secondary-dashboard " onClick={() => setConfirm(true)}>
+                    <button className="trash-button" onClick={() => setConfirm(true)}>
                       <div className="">
-                        <Trash2 className="w-6 h-6" /> <span className="text-lg"></span>
+                        <Trash2 className="sm:w-6 sm:h-6 h-4 w-4" /> <span className="text-lg"></span>
                       </div>
                     </button>
                   </div>
@@ -114,7 +113,7 @@ function ViewTask({ isEditing, handleIsEditing }) {
 
                 <div className="">
                   {/* status bar */}
-                  <div className="flex flex-col gap-10 relative my-14 mx-10 md:mx-20">
+                  <div className="flex flex-col gap-10 relative my-10 sm:my-12 md:my-14 mx-10 md:mx-20">
                     <div className="flex flex-row ">
                       {/* leftbar of status bar */}
                       <div
@@ -220,12 +219,12 @@ function ViewTask({ isEditing, handleIsEditing }) {
                   </div>
 
                   {/* left and right container */}
-                  <div className="grid grid-cols-1 2xl:grid-cols-[1fr_300px]  gap-10">
-                    <div className="flex flex-col gap-10 order-2 2xl:order-1 p-5 pl-8">
-                      <h5 className="text-4xl font-semibold">{task.title}</h5>
+                  <div className="grid grid-cols-1 2xl:grid-cols-[1fr_300px] gap-5 sm:gap-10">
+                    <div className="flex flex-col gap-10 order-2 2xl:order-1 sm:p-5 pl-2 sm:pl-8">
+                      <h5 className="text-3xl lg:text-4xl font-semibold">{task.title}</h5>
                       <div>
                         {task.dueDate && (
-                          <div className="text-xl flex flex-col md:flex-row md:items-center   lg:flex-col lg:items-start xl:flex-row xl:items-center   gap-x-2 gap-y-4">
+                          <div className="text-base flex flex-col md:flex-row md:items-center lg:flex-col lg:items-start xl:flex-row xl:items-center   gap-x-2 gap-y-4">
                             <span className="flex items-center gap-2 min-w-fit">
                               <CalendarClockIcon className="w-5" /> Due date:
                             </span>
@@ -244,32 +243,20 @@ function ViewTask({ isEditing, handleIsEditing }) {
                       </div>
                       <p className="text-lg font-stretch-expanded">{task.description}</p>
                     </div>
-                    <div className="flex  flex-col md:flex-row flex-1 xl:flex-row 2xl:flex-col gap-10 order-1 2xl:order-2 p-5">
-                      <div className="w-full flex flex-col gap-4 border-1 border-text-secondary p-5 rounded-2xl">
+                    <div className="flex  flex-col md:flex-row flex-1 xl:flex-row 2xl:flex-col gap-7 sm:gap-10 order-1 2xl:order-2 p-1 sm:p-5 mt-4 md:mt-0">
+                      <div className="w-full justify-between items-center flex flex-row sm:gap-4 border-1 border-text-secondary p-3 px-4 sm:p-5 rounded-2xl">
                         <p className="flex items-center gap-2">
                           {" "}
                           <AlertTriangle className="w-4 h-4" /> Priority :{" "}
                         </p>
-                        {task.priority == "low" && (
-                          <p className="flex flex-col items-center priority-low-tag check select-none text-2xl font-bold">
-                            <span>Low</span>
-                          </p>
-                        )}
-                        {task.priority == "medium" && (
-                          <p className="flex flex-col items-center priority-medium-tag check select-none text-2xl font-bold">
-                            <span> Medium</span>
-                          </p>
-                        )}
-                        {task.priority == "high" && (
-                          <p className="flex flex-col items-center priority-high-tag check select-none text-2xl font-bold">
-                            <span> High</span>
-                          </p>
-                        )}
+                        {task.priority == "low" && <p className="priority-low-tag view-task-priority">Low</p>}
+                        {task.priority == "medium" && <p className="priority-medium-tag view-task-priority">Medium</p>}
+                        {task.priority == "high" && <p className="priority-high-tag view-task-priority">High</p>}
                       </div>
-                      <div className=" w-full flex flex-col gap-4 border-1 border-text-secondary p-5 rounded-2xl">
+                      <div className=" w-full flex flex-col gap-4 border-1 border-text-secondary p-3 px-4 sm:p-5 rounded-2xl text-xs sm:text-sm">
                         {task.createdAt && (
-                          <div>
-                            <p className="flex gap-2 items-center">
+                          <div className="flex flex-row gap-x-2 gap-3">
+                            <p className="flex gap-2 items-center w-full">
                               <Clock className="w-4 h-4" />
                               <span className="">Created At :</span>
                             </p>
@@ -277,8 +264,8 @@ function ViewTask({ isEditing, handleIsEditing }) {
                           </div>
                         )}
                         {task.lastModifiedAt && (
-                          <div>
-                            <p className="flex gap-2 items-center">
+                          <div className="flex flex-row gap-x-2 gap-3">
+                            <p className="flex gap-2 items-center w-full">
                               <Clock className="w-4 h-4" />
                               Last Modified At :
                             </p>

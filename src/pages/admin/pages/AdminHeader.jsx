@@ -8,8 +8,8 @@ function AdminHeader({ sideBarOpen, setSideBarOpen, theme, setTheme }) {
 
     
   return (
-    <header className="p-8 flex justify-between h-30 items-center ">
-      <button className={`text-3xl lg:hidden select-none cursor-pointer `} onClick={() => (sideBarOpen ? setSideBarOpen(false) : setSideBarOpen(true))} >
+    <header className="p-3 sm:p-8 flex justify-between  sm:h-30 items-center ">
+      <button className={`text-xl sm:text-3xl lg:hidden select-none cursor-pointer `} onClick={() => (sideBarOpen ? setSideBarOpen(false) : setSideBarOpen(true))} >
         ☰
       </button>
 
@@ -18,11 +18,11 @@ function AdminHeader({ sideBarOpen, setSideBarOpen, theme, setTheme }) {
 
 
         <button
-          className="select-none cursor-pointer flex justify-center items-center bg-amber-100 text-orange-400 dark:text-white  dark:bg-bg-surface p-1 md:p-auto md:h-18 md:w-18 rounded-[50%] hover:scale-115 transition-transform duration-600 ease-in-out hover:animate-[spin_3s_linear_infinite] dark:hover:animate-pulse  "
+          className="select-none cursor-pointer flex justify-center items-center bg-amber-100 text-orange-400 dark:text-white  dark:bg-bg-surface p-1 md:p-auto h-12 w-12 md:h-18 md:w-18 rounded-[50%] hover:scale-115 transition-transform duration-600 ease-in-out hover:animate-[spin_3s_linear_infinite] dark:hover:animate-pulse  "
           onClick={theme == "light" ? () => setTheme("dark") : () => setTheme("light")}
         >
           {" "}
-          {theme == "light" ? <SunIcon className="w-10 h-10 " /> : <MoonIcon className="w-10 h-10 hover:drop-shadow-[0_0_20px_white]" />}{" "}
+          {theme == "light" ? <SunIcon className="w-6 h-6 md:w-10 md:h-10 " /> : <MoonIcon className="w-6 h-6 md:w-10 md:h-10 hover:drop-shadow-[0_0_20px_white]" />}{" "}
         </button>
       </div>
     </header>
