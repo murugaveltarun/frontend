@@ -29,7 +29,7 @@ function AdminDashboard() {
         </div>
         <main className="flex flex-col overflow-auto custom-scroll w-full">
           <AdminHeader setSideBarOpen={setSideBarOpen} sideBarOpen={sideBarOpen} theme={theme} setTheme={setTheme} />
-          <div className="flex justify-center"><AdminNavbar /></div>
+          {location.pathname != "/admin-dashboard" && <div className="flex justify-center"><AdminNavbar /></div>}
           
           <div className="overflow-autoflex m-1 md:p-8 md:pr-5 pr-1 justify-center items-center">
             <Outlet />

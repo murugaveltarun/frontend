@@ -6,6 +6,7 @@ import ConfirmModel from "../model/ConfirmModel";
 import AdminTasksSidebar from "./AdminTasksSidebar";
 import AdminUsersSidebar from "./AdminUsersSidebar";
 import AdminStatsSidebar from "./AdminStatsSidebar";
+import AdminHomeSidebar from "./AdminHomeSidebar";
 
 function AdminSidebar({ sideBarOpen, setSideBarOpen, user }) {
   const [confirm, setConfirm] = useState(false);
@@ -69,7 +70,7 @@ function AdminSidebar({ sideBarOpen, setSideBarOpen, user }) {
             {sidebar == "tasks" && <AdminTasksSidebar />}
             {sidebar == "users" && <AdminUsersSidebar />}
             {sidebar == "stats" && <AdminStatsSidebar />}
-            {sidebar == "none" && <p>not selected</p>}
+            {sidebar == "none" && <AdminHomeSidebar />}
           </div>
           <div>
             <div className="flex justify-center items-center border-sidebar-border border-t-1 dark:border-border-color">

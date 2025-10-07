@@ -45,7 +45,7 @@ export function AuthProvider({ children }) {
 
   const [page, setPage] = useState({
     pageNo: 1,
-    limit: 14,
+    limit: 13,
     sortBy: "lastModifiedAt",
     direction: "asc",
   });

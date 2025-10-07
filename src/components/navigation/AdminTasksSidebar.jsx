@@ -5,13 +5,12 @@ import { checkTokenOrRefresh } from "../../utils/checkTokenOrRefresh";
 import { useNavigate, Outlet, useLocation, useParams } from "react-router-dom";
 import { Power, RotateCcw, Search } from "lucide-react";
 import { AuthContext } from "../../pages/auth/AuthContext";
-import ConfirmModel from "../model/ConfirmModel";
-import toast from "react-hot-toast";
+
 
 function AdminTasksSidebar() {
   const [isSearching, setIsSearching] = useState(false);
 
-  let { setTasks, tasks, token, setToken, page, setPage, updatePage, updateResponsePage } = useContext(AuthContext);
+  let { setTasks, tasks, token, setToken, page, updatePage, updateResponsePage } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const { userid } = useParams();
@@ -178,7 +177,7 @@ function AdminTasksSidebar() {
           <form>
             <div className="flex sm:text-lg flex-col gap-5 p-5">
               <div className="flex justify-between items-center ">
-                <h5 className="text-xl sm:text-3xl font-semibold sm:py-5">Filter</h5>
+                <h5 className="text-xl  font-semibold sm:py-5">Filter</h5>
                 <div className="flex flex-row gap-5 justify-between items-end">
                   <button
                     onClick={(e) => {

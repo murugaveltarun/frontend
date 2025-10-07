@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDistance, subDays, format } from "date-fns";
-import { UsersContext } from "../../../components/context/UsersContext";
 
 function AllTasksAdmin() {
   let { tasks, setTasks, token, page, updatePage, responsePage } = useContext(AuthContext);
@@ -21,7 +20,7 @@ function AllTasksAdmin() {
   return (
     <div>
       <div>
-        <h6 className="pb-4">{location.pathname.startsWith("/admin-dashboard/users/") ? "Showing tasks from User ID : " + userid : "Showing tasks from all users"}</h6>
+        <h6 className="pb-4 font-bold">{location.pathname.startsWith("/admin-dashboard/users/") ? "Showing tasks from User ID : " + userid : "Showing tasks from all users"}</h6>
       </div>
       {tasks.length > 0 && (
         <div className="table-container">
@@ -75,12 +74,12 @@ function AllTasksAdmin() {
               <tr className="rounded-t-2xl ">
                 <th className="w-12 rounded-tl-xl table-heading">Task ID</th>
                 <th className="w-12 table-heading">User ID</th>
-                <th className="w-50 table-heading">Title</th>
-                <th className="w-70 table-heading">Description</th>
+                <th className="w-45 table-heading">Title</th>
+                <th className="w-55 table-heading">Description</th>
                 <th className="w-20 table-heading">Priority</th>
                 <th className="w-30 table-heading">Status</th>
                 <th className="w-30 table-heading">Created At</th>
-                <th className="w-40 rounded-tr-xl table-heading">Last Modified At</th>
+                <th className="w-50 rounded-tr-xl table-heading">Last Modified At</th>
               </tr>
             </thead>
             <tbody className="bg-text-primary dark:bg-bg-surface border-border-color rounded-b-2xl">

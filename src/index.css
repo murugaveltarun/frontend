@@ -36,6 +36,27 @@
   --color-dark-gray: #333333;
 }
 
+:root {
+  --chart-bar: theme(--color-dark-accent);
+  --chart-bar-hover: theme(--color-accent);
+  --chart-grid: theme("colors.gray.200");
+  --chart-text: theme("colors.gray.700");
+  --chart-tooltip-bg: theme("colors.white");
+  --chart-tooltip-text: theme("colors.gray.800");
+  --chart-area: theme(--color-dark-accent);
+}
+
+.dark {
+  --chart-bar: theme(--color-dark-purple);
+  --chart-bar-hover: theme(--color-gradient-mid-color);
+  --chart-grid: theme("colors.gray.700");
+  --chart-text: theme("colors.gray.300");
+  --chart-tooltip-bg: theme("colors.gray.800");
+  --chart-tooltip-text: theme("colors.gray.100");
+  --chart-area: theme(--color-gradient-mid-color);
+
+}
+
 html {
   scroll-behavior: smooth;
   @apply dark:bg-bg-primary bg-text-on-accent;
@@ -57,6 +78,10 @@ h1 {
 
 h4 {
   @apply text-4xl font-bold text-gradient mb-4;
+}
+
+@utility fl {
+  @apply flex justify-between items-center gap-1;
 }
 
 @utility btn-primary {
@@ -282,14 +307,52 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 
 /* navbar  */
 
-@utility active-link{
-  @apply font-extrabold rounded-full border-2 border-accent dark:border-gradient-mid-color 
+@utility active-link {
+  @apply font-extrabold text-accent dark:text-gradient-mid-color rounded-full border-2 border-accent dark:border-gradient-mid-color;
 }
 
 @utility old-nav {
-  @apply flex justify-center items-center py-2.5 sm:py-4 bg-dark-accent/10 w-fit px-10 rounded-full border-1 border-accent dark:border-gradient-mid-color text-accent dark:bg-dark-purple dark:text-white mb-4 md:mb-0
+  @apply flex justify-center items-center py-2.5 sm:py-4 bg-dark-accent/10 w-fit px-10 rounded-full border-1 border-accent dark:border-gradient-mid-color text-accent dark:bg-dark-purple dark:text-white mb-4 md:mb-0;
 }
 
 @utility new-nav {
-  @apply flex justify-center items-center w-fit mb-4 md:mb-0 rounded-full p-3 bg-dark-accent/30 dark:bg-dark-purple
+  @apply flex justify-center items-center w-fit mb-4 md:mb-0 rounded-full p-3 bg-dark-accent/30 dark:bg-dark-purple;
+}
+
+@utility graph-div{
+  @apply flex flex-col justify-center items-center border-1 border-accent dark:border-dark-purple rounded-xl bg-dark-accent/20 dark:bg-bg-surface/20 py-2
+}
+
+@utility admin-home-sidebar{
+  @apply flex gap-3 items-center p-3 w-full hover:bg-dark-accent/30 dark:hover:bg-dark-purple/30 rounded-2xl cursor-pointer duration-200
+}
+
+@utility sidebar-icon{
+  @apply sm:h-8 sm:w-8 text-accent dark:text-gradient-mid-color
+}
+
+@utility admin-home-container{
+  @apply p-5 flex flex-col gap-4 sm:gap-6 lg:gap-8 2xl:mt-10
+}
+
+@utility admin-home-div{
+  @apply w-full p-4 sm:p-8 bg-neutral-50 dark:bg-bg-primary/20 border-l-4 border-1 shadow-2xl border-accent dark:border-gradient-mid-color rounded-xl flex flex-col gap-4 hover:scale-103 duration-300 cursor-pointer items-center
+}
+
+@utility admin-home-h{
+  @apply text-base sm:text-lg lg:text-xl flex flex-col justify-center items-center gap-2 text-accent dark:text-gradient-mid-color
+}
+
+@utility admin-home-p {
+  @apply text-xs sm:text-sm lg:text-base list-inside;
+
+  li::marker {
+    content: "✔ ";
+    color: green;
+  }
+}
+
+
+@utility admin-home-icon{
+  @apply w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-dark-accent/10 dark:bg-dark-purple/20 p-3 rounded-full
 }
