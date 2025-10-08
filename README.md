@@ -230,11 +230,11 @@ api.interceptors.request.use((config) => {
 ### 🌞 Light Mode
 
 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-  <img src="images/user-dash-light-home.png" alt="Light Mode - Home" width="300"/>
-  <img src="images/user-dash-light-task-add.png" alt="Light Mode - Add Task" width="300"/>
-  <img src="images/user-dash-light-task-edit.png" alt="Light Mode - Edit Task" width="300"/>
-  <img src="images/user-dash-light-task-view.png" alt="Light Mode - View Task" width="300"/>
-  <img src="images/user-dash-confirm.png" alt="Light Mode - Confirmation" width="300"/>
+  <img src="images/user-dash-light-home.png" alt="Light Mode - Home" width=""/>
+  <img src="images/user-dash-light-task-add.png" alt="Light Mode - Add Task" width=""/>
+  <img src="images/user-dash-light-task-edit.png" alt="Light Mode - Edit Task" width=""/>
+  <img src="images/user-dash-light-task-view.png" alt="Light Mode - View Task" width=""/>
+  <img src="images/user-dash-confirm.png" alt="Light Mode - Confirmation" width=""/>
 </div>
 
 
@@ -242,12 +242,12 @@ api.interceptors.request.use((config) => {
 #### Mobile
 
 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-  <img src="images/user-dash-dark-home-mobile.png" alt="Light Mode - Mobile Home" width="150"/>
-    <img src="images/user-dash-dark-home-mobile-sidebar.png" alt="Dark Mode - Mobile Home Sidebar" width="150"/>
-  <img src="images/user-dash-light-task-add-mobile.png" alt="Light Mode - Mobile Add Task" width="150"/>
-  <img src="images/user-dash-light-task-edit-mobile.png" alt="Light Mode - Mobile Edit Task" width="150"/>
-  <img src="images/user-dash-light-task-view-mobile.png" alt="Light Mode - Mobile View Task" width="150"/>
-  <img src="images/user-dash-confirm-mobile.png" alt="Light Mode - Mobile Confirmation" width="150"/>
+  <img src="images/user-dash-dark-home-mobile.png" alt="Light Mode - Mobile Home" width="300"/>
+    <img src="images/user-dash-dark-home-mobile-sidebar.png" alt="Dark Mode - Mobile Home Sidebar" width="300"/>
+  <img src="images/user-dash-light-task-add-mobile.png" alt="Light Mode - Mobile Add Task" width="300"/>
+  <img src="images/user-dash-light-task-edit-mobile.png" alt="Light Mode - Mobile Edit Task" width="300"/>
+  <img src="images/user-dash-light-task-view-mobile.png" alt="Light Mode - Mobile View Task" width="300"/>
+  <img src="images/user-dash-confirm-mobile.png" alt="Light Mode - Mobile Confirmation" width="300"/>
 </div>
 
 ---
