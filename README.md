@@ -241,7 +241,7 @@ api.interceptors.request.use((config) => {
 
 #### Mobile
 
-<div style="display: flex; gap: 10px; flex-wrap: wrap;">
+<div style="display: flex; gap: 30px; flex-wrap: wrap;">
   <img src="images/user-dash-dark-home-mobile.png" alt="Light Mode - Mobile Home" width="300"/>
     <img src="images/user-dash-dark-home-mobile-sidebar.png" alt="Dark Mode - Mobile Home Sidebar" width="300"/>
   <img src="images/user-dash-light-task-add-mobile.png" alt="Light Mode - Mobile Add Task" width="300"/>
@@ -249,6 +249,31 @@ api.interceptors.request.use((config) => {
   <img src="images/user-dash-light-task-view-mobile.png" alt="Light Mode - Mobile View Task" width="300"/>
   <img src="images/user-dash-confirm-mobile.png" alt="Light Mode - Mobile Confirmation" width="300"/>
 </div>
+
+## 🏢 Admin Dashboard Screenshots
+
+### 🌙 Dark Mode
+
+#### Home
+<img src="images/admin-dash-dark-home.png" alt="Admin Dark Home" width="100%"/>
+
+#### Statistics
+<img src="images/admin-dash-dark-stats-1.png" alt="Admin Dark Stats 1" width="100%"/>
+<img src="images/admin-dash-dark-stats-2.png" alt="Admin Dark Stats 2" width="100%"/>
+<img src="images/admin-dash-dark-stats-3.png" alt="Admin Dark Stats 3" width="100%"/>
+<img src="images/admin-dash-dark-stats-4.png" alt="Admin Dark Stats 4" width="100%"/>
+<img src="images/admin-dash-dark-stats-5.png" alt="Admin Dark Stats 5" width="100%"/>
+<img src="images/admin-dash-dark-stats-summary.png" alt="Admin Dark Stats Summary" width="100%"/>
+
+#### Tasks & Users
+<img src="images/admin-dash-dark-tasks.png" alt="Admin Dark Tasks" width="100%"/>
+<img src="images/admin-dash-dark-user.png" alt="Admin Dark User" width="100%"/>
+<img src="images/admin-dash-dark-users.png" alt="Admin Dark Users" width="100%"/>
+
+### 🌞 Light Mode
+
+#### Home
+<img src="images/admin-dash-light-home.png" alt="Admin Light Home" width="100%"/>
 
 ---
 
