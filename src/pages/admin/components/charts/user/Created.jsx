@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import React from "react";
 import {
   AreaChart,
@@ -29,7 +30,7 @@ function Created({ tasks }) {
   }
 
   const data = allDates.map((date) => ({
-    date,
+    date: format(new Date(date), "dd-MM-yy"), // visible label
     count: counts[date] || 0,
   }));
 

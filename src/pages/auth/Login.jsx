@@ -95,10 +95,10 @@ function Login() {
       <div className="flex justify-center items-center min-h-screen bg-bg-primary">
         <div className=" min-h-screen/2 ">
           <div className="card w-fit m-4 sm:m-0 ">
-                                          <div className="flex w-full p-7 sm:p-4 flex-col sm:flex-row justify-center items-center gap-5 text-sm md:text-md">
-                    <GoogleOauth />
-                    <GithubOauth />
-                  </div>
+            <div className="flex w-full p-7 sm:p-4 flex-col sm:flex-row justify-center items-center gap-5 text-sm md:text-md">
+              <GoogleOauth />
+              <GithubOauth />
+            </div>
             <h4 className="m-2 sm:m-7 text-sm ">Login to your Account</h4>
 
             <div className="flex flex-col m-2 sm:m-10 gap-3">
@@ -142,15 +142,17 @@ function Login() {
                   {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
                 </div>
 
-                    
-                {badCredentials && <p className="text-red-500 text-sm">Login failed: invalid credentials or user not found.</p>}
-                
+                {badCredentials && <p className="text-red-500 text-sm">Login failed: invalid credentials or account disabled.</p>}
+
                 <div className="flex flex-col items-center justify-center w-full ">
                   <button className="btn-primary w-fit m-4 sm:text-xl " type="submit">
                     {buttonText}
                   </button>
-                {badCredentials && <a href="/forgot-password" className=" my-3 sm:my-5 sm:mt-2 text-md text-white text-end hover:underline">Forgot your password?</a>}
-
+                  {badCredentials && (
+                    <a href="/forgot-password" className=" my-3 sm:my-5 sm:mt-2 text-md text-white text-end hover:underline">
+                      Forgot your password?
+                    </a>
+                  )}
                 </div>
               </form>
               <p className="text-lg text-gray-300">

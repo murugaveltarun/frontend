@@ -24,6 +24,12 @@ import User from "./pages/admin/components/User";
 import UserTask from "./pages/admin/components/UserTask";
 import AllTasksAdmin from "./pages/admin/components/AllTasksAdmin";
 import { UsersProvider } from "./components/context/UsersContext";
+import AccountsCreated from "./pages/admin/components/charts/users/AccountsCreated";
+import TasksCreated from "./pages/admin/components/charts/users/TasksCreated";
+import UsersAuthProvider from "./pages/admin/components/charts/users/UsersAuthProvider";
+import TasksStatus from "./pages/admin/components/charts/users/TasksStatus";
+import TasksPriority from "./pages/admin/components/charts/users/TasksPriority";
+import { StatsProvider } from "./components/context/StatsProvider";
 
 function App() {
   const location = useLocation();
@@ -66,7 +72,9 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={["ROLE_ADMIN"]}>
               <UsersProvider>
-                <AdminDashboard />
+                <StatsProvider>
+                  <AdminDashboard />
+                </StatsProvider>
               </UsersProvider>
             </ProtectedRoute>
           }
@@ -75,6 +83,11 @@ function App() {
           <Route path="users" element={<AllUsers />} />
           <Route path="tasks" element={<AllTasksAdmin />} />
           <Route path="stats" element={<AllStats />} />
+          <Route path="stats/accounts-created" element={<AccountsCreated />} />
+          <Route path="stats/tasks-created" element={<TasksCreated />} />
+          <Route path="stats/users-auth-provider" element={<UsersAuthProvider />} />
+          <Route path="stats/tasks-status" element={<TasksStatus />} />
+          <Route path="stats/tasks-priority" element={<TasksPriority />} />
           <Route path="users/:userid" element={<User />} />
           <Route path="users/:userid/tasks" element={<AllTasksAdmin />} />
           <Route path="users/:userid/tasks/:taskid" element={<UserTask />} />
