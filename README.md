@@ -1,38 +1,41 @@
 # TaskWiser Frontend
 
-A modern, role-based task management web application built with React. TaskWiser provides intuitive dashboards for both users and administrators to efficiently manage tasks, users, and analytics.
+**TaskWiser Frontend** is a modern, **light & dark-themed, role-based task management web application** built with React. It delivers a **seamless, intuitive experience** for both users and administrators, allowing efficient management of tasks, users, and analytics through **interactive dashboards and real-time updates**.
 
 ![TaskWiser Demo](frontend-demo.png)
 
 ## 🚀 Overview
 
-TaskWiser is a comprehensive task management solution that empowers teams and individuals to organize, track, and manage their work effectively. The frontend delivers a seamless user experience with role-based access control, real-time updates, and comprehensive analytics.
+TaskWiser’s frontend empowers individuals and teams to **organize, track, and manage tasks effortlessly**. With **role-based access control**, dynamic filtering, advanced analytics, and a **responsive, modern UI**, it ensures productivity and clarity across devices and platforms.
 
-### Key Features
+### ✨ Key Features
 
-- **🔐 Secure Authentication**: JWT-based authentication with OAuth2 integration (Google Login)
-- **👥 Role-Based Access**: Separate dashboards for Users and Administrators
-- **📊 Advanced Analytics**: Comprehensive statistics and data visualization
-- **🎨 Modern UI/UX**: Clean, responsive design with Tailwind CSS
-- **⚡ Real-time Updates**: Instant feedback with toast notifications
-- **📱 Mobile Responsive**: Optimized for all device sizes
-- **🔍 Advanced Filtering**: Powerful task filtering and sorting capabilities
-- **📈 Data Visualization**: Interactive charts and graphs using Recharts
+- **🔐 Secure Authentication** – JWT-based login with **refresh tokens** and OAuth2 (Google and GitHub Login)
+- **👥 Role-Based Dashboards** – Dedicated interfaces for Users and Administrators
+- **📊 Interactive Analytics** – Real-time charts and statistics for admins using Recharts
+- **🎨 Modern UI/UX** – Light and dark themes with Tailwind CSS for a polished look
+- **⚡ Real-Time Updates** – Instant toast notifications for task events
+- **📱 Fully Responsive** – Optimized for desktops, tablets, and mobile devices
+- **🔍 Advanced Filtering & Sorting** – Effortlessly manage and prioritize tasks
+- **🖥️ Clean Code Structure** – Organized components for maintainability and scalability
 
 ## 🛠️ Technologies Used
 
 ### Core Technologies
+
 - **React 19.1.1** - Modern React with hooks and context
 - **Vite 7.1.2** - Fast build tool and development server
 - **React Router DOM 7.8.2** - Client-side routing
 - **Tailwind CSS 4.1.12** - Utility-first CSS framework
 
 ### State Management & API
+
 - **Context API** - Built-in React state management
 - **Axios 1.11.0** - HTTP client for API communication
 - **JWT Decode 4.0.0** - JWT token handling
 
 ### UI Components & Visualization
+
 - **Lucide React 0.542.0** - Beautiful icon library
 - **React Hot Toast 2.6.0** - Toast notifications
 - **Recharts 3.2.1** - Data visualization library
@@ -40,6 +43,7 @@ TaskWiser is a comprehensive task management solution that empowers teams and in
 - **Date-fns 4.1.0** - Date manipulation utilities
 
 ### Development Tools
+
 - **ESLint** - Code linting and formatting
 - **Vite Plugin React** - React development support
 
@@ -114,39 +118,34 @@ src/
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/murugaveltarun/frontend.git
    cd frontend
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Environment Configuration**
-   
+
    Create a `.env` file in the root directory:
+
    ```env
-   # Backend API Configuration
-   VITE_BACKEND_URL=http://localhost:8080/api
-   
-   # OAuth Configuration (Google)
-   VITE_GOOGLE_CLIENT_ID=your_google_client_id
-   VITE_GOOGLE_CLIENT_SECRET=your_google_client_secret
-   
-   # Application Configuration
-   VITE_APP_NAME=TaskWiser
-   VITE_APP_VERSION=1.0.0
+   VITE_BACKEND_URL=http://localhost:8080
    ```
 
 4. **Start development server**
+
    ```bash
    npm run dev
    ```
 
 5. **Access the application**
-   
+
    Open your browser and navigate to `http://localhost:5173`
 
 ### Available Scripts
@@ -154,98 +153,14 @@ src/
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
-## 🐳 Docker Setup
-
-### Development with Docker
-
-Create a `Dockerfile` in the root directory:
-
-```dockerfile
-# Use Node.js 18 Alpine image
-FROM node:18-alpine
-
-# Set working directory
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm ci --only=production
-
-# Copy source code
-COPY . .
-
-# Build the application
-RUN npm run build
-
-# Expose port
-EXPOSE 3000
-
-# Start the application
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "3000"]
-```
-
-### Docker Compose
-
-Create a `docker-compose.yml` file:
-
-```yaml
-version: '3.8'
-
-services:
-  frontend:
-    build: .
-    ports:
-      - "3000:3000"
-    environment:
-      - VITE_BACKEND_URL=http://backend:8080/api
-      - VITE_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
-      - VITE_GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
-    depends_on:
-      - backend
-    networks:
-      - taskwiser-network
-
-  backend:
-    # Your backend service configuration
-    image: taskwiser-backend:latest
-    ports:
-      - "8080:8080"
-    networks:
-      - taskwiser-network
-
-networks:
-  taskwiser-network:
-    driver: bridge
-```
-
-### Docker Commands
-
-```bash
-# Build and run with Docker Compose
-docker-compose up --build
-
-# Run in detached mode
-docker-compose up -d
-
-# Stop services
-docker-compose down
-```
 
 ## 🔧 Configuration
 
 ### Environment Variables
 
-| Variable | Description | Required | Default |
-|----------|-------------|----------|---------|
-| `VITE_BACKEND_URL` | Backend API base URL | Yes | `http://localhost:8080/api` |
-| `VITE_GOOGLE_CLIENT_ID` | Google OAuth client ID | Yes | - |
-| `VITE_GOOGLE_CLIENT_SECRET` | Google OAuth client secret | Yes | - |
-| `VITE_APP_NAME` | Application name | No | `TaskWiser` |
-| `VITE_APP_VERSION` | Application version | No | `1.0.0` |
+| Variable           | Description          | Required | Default                 |
+| ------------------ | -------------------- | -------- | ----------------------- |
+| `VITE_BACKEND_URL` | Backend API base URL | Yes      | `http://localhost:8080` |
 
 ### API Configuration
 
@@ -255,12 +170,12 @@ The application uses Axios for HTTP requests with automatic token injection:
 // API base configuration
 const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
-  withCredentials: true
+  withCredentials: true,
 });
 
 // Automatic JWT token injection
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -268,69 +183,17 @@ api.interceptors.request.use((config) => {
 });
 ```
 
-## 🔍 Troubleshooting
+## ⚠️ Quick Notes
 
-### Common Issues
-
-#### 1. Environment Variables Not Loading
-
-**Problem**: Environment variables are undefined or not loading properly.
-
-**Solution**:
-- Ensure `.env` file is in the root directory (same level as `package.json`)
-- Restart the development server after adding new variables
-- Variables must start with `VITE_` to be accessible in the frontend
-- Check for typos in variable names
-
-#### 2. CORS Errors
-
-**Problem**: CORS (Cross-Origin Resource Sharing) errors when making API requests.
-
-**Solution**:
-- Ensure backend is configured to allow requests from your frontend URL
-- Check that `VITE_BACKEND_URL` is correctly set
-- For development, ensure backend allows `http://localhost:5173`
-
-#### 3. Authentication Issues
-
-**Problem**: Users cannot log in or are redirected unexpectedly.
-
-**Solution**:
-- Clear browser localStorage and cookies
-- Verify JWT token is being stored correctly
-- Check backend authentication endpoints are accessible
-- Ensure OAuth credentials are correctly configured
-
-#### 4. Build Errors
-
-**Problem**: Application fails to build for production.
-
-**Solution**:
-- Run `npm run lint` to check for code issues
-- Ensure all environment variables are properly set
-- Check for any missing dependencies
-- Verify all imports are correct
-
-#### 5. Hot Module Replacement (HMR) Issues
-
-**Problem**: Changes not reflecting in development mode.
-
-**Solution**:
-- Restart the development server
-- Clear browser cache
-- Check for syntax errors in the code
-- Ensure file paths are correct
-
-### Performance Optimization
-
-- **Code Splitting**: Routes are automatically code-split by Vite
-- **Bundle Analysis**: Use `npm run build -- --analyze` to analyze bundle size
-- **Image Optimization**: Optimize images before adding to the project
-- **Lazy Loading**: Components are loaded on-demand
+- Make sure the backend server is running before starting the frontend.
+- Verify that the `.env` file is present and correctly configured.
+- The app requires Node.js v18+ and npm v9+.
+- Backend must allow CORS requests from the frontend URL (`http://localhost:5173`) to ensure proper API communication (Mention your frontend URL in your backend .env file).
 
 ## 📊 Features Overview
 
 ### User Dashboard
+
 - ✅ Create, edit, and delete personal tasks
 - ✅ Advanced filtering and sorting
 - ✅ Task progress tracking
@@ -338,6 +201,7 @@ api.interceptors.request.use((config) => {
 - ✅ Responsive design for mobile devices
 
 ### Admin Dashboard
+
 - ✅ User management and analytics
 - ✅ Task oversight across all users
 - ✅ Comprehensive statistics and charts
@@ -345,69 +209,14 @@ api.interceptors.request.use((config) => {
 - ✅ Data export capabilities
 
 ### Security Features
+
 - ✅ JWT-based authentication
-- ✅ OAuth2 integration (Google)
+- ✅ OAuth2 integration (Google,Github)
 - ✅ Role-based access control
 - ✅ Protected routes
 - ✅ Automatic token refresh
 - ✅ Secure API communication
 
-## 🤝 Contributing
-
-We welcome contributions to TaskWiser! Please follow these guidelines:
-
-### Development Workflow
-
-1. **Fork the repository**
-2. **Create a feature branch**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. **Make your changes**
-4. **Run tests and linting**
-   ```bash
-   npm run lint
-   npm run build
-   ```
-5. **Commit your changes**
-   ```bash
-   git commit -m "Add: your feature description"
-   ```
-6. **Push to your fork**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-7. **Create a Pull Request**
-
-### Code Style Guidelines
-
-- Follow ESLint configuration
-- Use meaningful variable and function names
-- Add comments for complex logic
-- Ensure responsive design
-- Test on multiple browsers and devices
-
-### Reporting Issues
-
-When reporting issues, please include:
-- Browser and version
-- Steps to reproduce
-- Expected vs actual behavior
-- Screenshots if applicable
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **React Team** - For the amazing framework
-- **Tailwind CSS** - For the utility-first CSS framework
-- **Vite Team** - For the fast build tool
-- **Contributors** - All contributors who help improve TaskWiser
-
 ---
 
-**Built with ❤️ by the TaskWiser Team**
-
-For more information, visit our [documentation](docs/) or contact us at [support@taskwiser.com](mailto:support@taskwiser.com).
+**Built by Tarun, Java Full Stack Developer**
