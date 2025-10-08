@@ -3,6 +3,8 @@
 **TaskWiser Frontend** is a modern, **light & dark-themed, role-based task management web application** built with React. It delivers a **seamless, intuitive experience** for both users and administrators, allowing efficient management of tasks, users, and analytics through **interactive dashboards and real-time updates**.
 
 🌐 **Live Demo:** [https://taskwiser.vercel.app](https://taskwiser.vercel.app)
+> **Note:** Screenshots of all dashboards in light & dark modes, and mobile & desktop views, are provided at the end of the document.
+
 
 ## 🚀 Overview
 
