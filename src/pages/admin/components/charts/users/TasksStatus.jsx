@@ -2,7 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { StatsContext } from "../../../../../components/context/StatsProvider";
 
-const COLORS = ["var(--color-status-not-started)", "var(--color-status-completed)", "var(--color-status-in-progress)"]; // replace with your own colors
+const COLORS_MAP = {
+  "not started": "var(--color-status-not-started)",
+  "completed": "var(--color-status-completed)",
+  "in progress": "var(--color-status-in-progress)",
+};
 
 export default function TasksStatus() {
   const { stats } = useContext(StatsContext);
@@ -44,7 +48,7 @@ export default function TasksStatus() {
 
   return (
     <div className="w-full p-4">
-      <h2 className="sm:text-xl lg:text-2xl xl:text-3xl text-center">Tasks by Priority</h2>
+      <h2 className="sm:text-xl lg:text-2xl xl:text-3xl text-center">Tasks by Status</h2>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie
@@ -57,8 +61,8 @@ export default function TasksStatus() {
             fill="var(--chart-area)"
             label={({ percent, name }) => `${name}: ${(percent * 100).toFixed(0)}%`}
           >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${entry.name}`} fill={COLORS[index % COLORS.length]} />
+            {data.map((entry) => (
+              <Cell key={`cell-${entry.name}`} fill={COLORS_MAP[entry.name] || "#8884d8"} />
             ))}
           </Pie>
           <Tooltip content={renderTooltip} />

@@ -2,7 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { StatsContext } from "../../../../../components/context/StatsProvider";
 
-const COLORS = ["var(--color-default)", "var(--color-border-color)", "var(--color-gradient-start-color)"]; // replace with your own colors
+const COLORS_MAP = {
+  "local": "var(--color-default)",
+  "github": "var(--color-border-color)",
+  "google": "var(--color-gradient-start-color)",
+};
 
 export default function UsersAuthProvider() {
   const { stats } = useContext(StatsContext);
@@ -57,8 +61,8 @@ export default function UsersAuthProvider() {
             fill="var(--chart-area)"
             label={({ percent, name }) => `${name}: ${(percent * 100).toFixed(0)}%`}
           >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${entry.name}`} fill={COLORS[index % COLORS.length]} />
+            {data.map((entry) => (
+              <Cell key={`cell-${entry.name}`} fill={COLORS_MAP[entry.name] || "#8884d8"} />
             ))}
           </Pie>
           <Tooltip content={renderTooltip} />
