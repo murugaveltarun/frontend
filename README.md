@@ -243,7 +243,7 @@ api.interceptors.request.use((config) => {
 
 #### Mobile
 
-<div style="display: flex; gap: 30px; flex-wrap: wrap;">
+<div style="display: flex; gap: 40px; flex-wrap: wrap;">
   <img src="images/user-dash-dark-home-mobile.png" alt="Light Mode - Mobile Home" width="300"/>
     <img src="images/user-dash-dark-home-mobile-sidebar.png" alt="Dark Mode - Mobile Home Sidebar" width="300"/>
   <img src="images/user-dash-light-task-add-mobile.png" alt="Light Mode - Mobile Add Task" width="300"/>
